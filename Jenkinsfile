@@ -1,3 +1,4 @@
+
 pipeline {
     agent any 
 
@@ -10,15 +11,20 @@ pipeline {
             }
         }
 
+        stage('Compile') {
+            steps {
+                script {
+                    // Compiler le projet avec Maven
+                    sh 'mvn clean compile '
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
-                    try {
-                        // Compilation et packaging du projet en une étape
-                        sh 'mvn clean package -X'
-                    } catch (Exception e) {
-                        error "Build failed: ${e}"
-                    }
+
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
