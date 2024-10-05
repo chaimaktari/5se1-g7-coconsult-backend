@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout GIT') {
             steps {
-                echo 'Pulling from Git...'
+                echo 'Pulling from Git'
                 git branch: 'zahra-bf',
                     url: 'https://github.com/chaimaktari/5se1-g7-coconsult.git'
             }
@@ -34,7 +34,7 @@ pipeline {
             echo "Pipeline finished"
         }
         success {
-            echo "Build succeeded!"
+            echo "Build succeeded!!"
         }
         failure {
             echo "Build failed!"
