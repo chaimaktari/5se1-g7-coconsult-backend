@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Compiler le projet avec Maven
-                    sh 'mvn clean compile -X'
+                    sh 'mvn clean compile -DskipTests'
                 }
             }
         }
