@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Compiler le projet avec Maven
-                    sh 'mvn clean compile -DskipTests'
+                    sh 'mvn clean compile '
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
 
-                    sh 'mvn package -X'
+                    sh 'mvn package -DskipTests'
                 }
             }
         }
