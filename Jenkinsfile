@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout GIT') {
             steps {
                 echo 'Pulling from Git...'
-                git branch: 'main',
+                git branch: 'zahra-bf',
                     url: 'https://github.com/chaimaktari/5se1-g7-coconsult.git'
             }
         }
@@ -13,9 +13,32 @@ pipeline {
         stage('Compile') {
             steps {
                 script {
+                    // Compiler le projet avec Maven
                     sh 'mvn clean compile'
                 }
             }
         }
+
+        stage('Build') {
+            steps {
+                script {
+
+                    sh 'mvn package'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished"
+        }
+        success {
+            echo "Build succeeded!"
+        }
+        failure {
+            echo "Build failed!"
+        }
     }
 }
+
