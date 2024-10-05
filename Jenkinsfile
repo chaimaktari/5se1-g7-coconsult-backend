@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     // Compiler le projet avec Maven
-                    sh 'mvn clean compile'
+                    sh 'mvn clean compile -X'
                 }
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
 
-                    sh 'mvn package'
+                    sh 'mvn package -X'
                 }
             }
         }
