@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
 
     stages {
         stage('Checkout GIT') {
@@ -17,7 +17,7 @@ pipeline {
                 }
             }
         }
-
+    }
       post {
             always {
                 cleanWs()
