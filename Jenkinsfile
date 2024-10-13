@@ -13,24 +13,25 @@ pipeline {
         stage('Compile') {
             steps {
                 script {
-                    sh 'mvn clean compile -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
 
 
-        stage('Verify JAR') {
-            steps {
-                script {
-                    def jarExists = fileExists 'target/*.jar'
-                    if (!jarExists) {
-                        error("JAR file not found!")
-                    } else {
-                        echo "JAR file created successfully."
-                    }
-                }
-            }
-        }
+     stage('Verify JAR') {
+         steps {
+             script {
+                 def jarFiles = sh(script: 'ls target/*.jar', returnStdout: true).trim()
+
+                 if (jarFiles) {
+                     echo "JAR file created: ${jarFiles}"
+                 } else {
+                     error("JAR file not found!")
+                 }
+             }
+         }
+     }
 
     }
       post {
