@@ -50,6 +50,8 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy="emp",fetch = FetchType.EAGER)
     @JsonIgnore
     Set<Absence> absences;
+
+    @Builder.Default
     private int nbrJourConge = 26;
 
    @JsonIgnore
