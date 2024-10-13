@@ -17,6 +17,21 @@ pipeline {
                 }
             }
         }
+
+
+        stage('Verify JAR') {
+            steps {
+                script {
+                    def jarExists = fileExists 'target/*.jar'
+                    if (!jarExists) {
+                        error("JAR file not found!")
+                    } else {
+                        echo "JAR file created successfully."
+                    }
+                }
+            }
+        }
+
     }
       post {
             always {
