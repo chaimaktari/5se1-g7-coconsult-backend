@@ -35,9 +35,6 @@ pipeline {
 
     }
       post {
-            always {
-                cleanWs()
-            }
             failure {
                 mail to: 'anisfetoui2000@gmail.com',
                     subject: "Échec du pipeline Jenkins - ${env.JOB_NAME} numero : #${env.BUILD_NUMBER}",
