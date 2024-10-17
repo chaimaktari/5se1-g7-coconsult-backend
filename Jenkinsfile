@@ -42,7 +42,7 @@ pipeline {
         stage('Build') {
                     steps {
                         script {
-                            sh "docker build -t $DOCKERHUB_USER/AnisFETOUI-5se1-DevDynamos:latest ."
+                            sh "docker build -t anisfetoui/AnisFETOUI-5se1-DevDynamos:latest ."
                         }
                     }
                 }
@@ -59,7 +59,7 @@ pipeline {
         stage('Push Docker Image') {
                     steps {
                         script {
-                            sh "docker push $DOCKERHUB_USER/AnisFETOUI-5se1-DevDynamos:latest"
+                            sh "docker push anisfetoui/AnisFETOUI-5se1-DevDynamos:latest"
                         }
                     }
                 }
