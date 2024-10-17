@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+            DOCKER_IMAGE = "AnisFETOUI-5se1-DevDynamos"
+            BRANCH_NAME = "feature-AnisFETOUI"
+            IMAGE_VERSION = "${BUILD_NUMBER}"
+            DOCKERHUB_CREDENTIALS = credentials('dockerhub-anis-credentials')
+        }
 
     stages {
         stage('Checkout GIT') {
@@ -33,6 +39,27 @@ pipeline {
          }
      }
 
+
+        stage('Build Docker Image') {
+            steps {
+                echo "Building Docker Image with tag ${IMAGE_VERSION}"
+                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_VERSION} ."
+                sh "docker tag ${DOCKER_IMAGE}:${IMAGE_VERSION} ${DOCKER_IMAGE}:latest"
+            }
+        }
+
+        stage('Docker Login and Push') {
+            steps {
+                script {
+                    echo "Logging into DockerHub..."
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+
+                    echo "Pushing Docker images to DockerHub..."
+                    sh "docker push ${DOCKER_IMAGE}:${IMAGE_VERSION}"
+                    sh "docker push ${DOCKER_IMAGE}:latest"
+                }
+            }
+        }
     }
       post {
             failure {
