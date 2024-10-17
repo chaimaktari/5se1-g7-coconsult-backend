@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CandidatRepo extends JpaRepository<Candidat, Long> {
@@ -27,5 +28,5 @@ public interface CandidatRepo extends JpaRepository<Candidat, Long> {
     @Query("SELECT c FROM Candidat c JOIN c.detailRecrutement dr WHERE c.StatutCandidat = 'ACCEPTE' AND dr.dateEntretien IS NULL AND c.Datepostule <= :dateLimite")
     List<Candidat> findAcceptedCandidatsWithoutDateEntretien(LocalDate dateLimite);
 
-
+    Optional<Candidat> findByEmail(String email);
 }
