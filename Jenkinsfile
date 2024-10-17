@@ -47,6 +47,7 @@ pipeline {
                  }
              }
          }
+         }
 
 
         stage('Build and Push Docker Image') {
@@ -58,6 +59,9 @@ pipeline {
                     }
                 }
     }
+
+
+
       post {
             failure {
                 mail to: 'anisfetoui2000@gmail.com',
