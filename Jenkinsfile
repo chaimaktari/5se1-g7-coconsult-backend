@@ -39,22 +39,27 @@ pipeline {
          }
      }
 
+        stage('Build') {
+                    steps {
+                        script {
+                            sh "docker build -t $DOCKERHUB_USER/AnisFETOUI-5se1-DevDynamos:latest ."
+                        }
+                    }
+                }
+
      stage('Docker Login') {
          steps {
              script {
-                 withCredentials([usernamePassword(credentialsId: 'anisfetoui', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PSW')]) {
-                     sh "docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PSW"
-                 }
+                     sh "docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
              }
          }
          }
 
 
-        stage('Build and Push Docker Image') {
+        stage('Push Docker Image') {
                     steps {
                         script {
-                            sh "docker build -t $DOCKERHUB_USER/my-app:latest ."
-                            sh "docker push $DOCKERHUB_USER/my-app:latest"
+                            sh "docker push $DOCKERHUB_USER/AnisFETOUI-5se1-DevDynamos:latest"
                         }
                     }
                 }
