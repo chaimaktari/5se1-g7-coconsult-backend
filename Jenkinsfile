@@ -39,27 +39,24 @@ pipeline {
          }
      }
 
+     stage('Docker Login') {
+         steps {
+             script {
+                 withCredentials([usernamePassword(credentialsId: 'anisfetoui', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PSW')]) {
+                     sh "docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PSW"
+                 }
+             }
+         }
 
-        stage('Build Docker Image') {
-            steps {
-                echo "Building Docker Image with tag ${IMAGE_VERSION}"
-                sh "docker build -t ${DOCKER_IMAGE}:${IMAGE_VERSION} ."
-                sh "docker tag ${DOCKER_IMAGE}:${IMAGE_VERSION} ${DOCKER_IMAGE}:latest"
-            }
-        }
 
-        stage('Docker Login and Push') {
-            steps {
-                script {
-                    echo "Logging into DockerHub..."
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-
-                    echo "Pushing Docker images to DockerHub..."
-                    sh "docker push ${DOCKER_IMAGE}:${IMAGE_VERSION}"
-                    sh "docker push ${DOCKER_IMAGE}:latest"
+        stage('Build and Push Docker Image') {
+                    steps {
+                        script {
+                            sh "docker build -t $DOCKERHUB_USER/my-app:latest ."
+                            sh "docker push $DOCKERHUB_USER/my-app:latest"
+                        }
+                    }
                 }
-            }
-        }
     }
       post {
             failure {
