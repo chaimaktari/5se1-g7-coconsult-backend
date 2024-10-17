@@ -3,10 +3,7 @@ package com.bezkoder.springjwt.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 
 public class Project {
     @Id
@@ -39,7 +37,7 @@ public class Project {
     private Team team;
 
 //    @JsonIgnore
-    @OneToMany(mappedBy ="project",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="project", fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     private List<Task> tasks;
     @JsonIgnore
     @OneToMany(mappedBy ="projectt",  cascade = CascadeType.ALL)
