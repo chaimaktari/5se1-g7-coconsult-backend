@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-            DOCKER_IMAGE = "AnisFETOUI-5se1-DevDynamos"
+            DOCKER_IMAGE = "anisfetoui-5se1-devdynamos"
             BRANCH_NAME = "feature-AnisFETOUI"
             IMAGE_VERSION = "${BUILD_NUMBER}"
             DOCKERHUB_CREDENTIALS = credentials('dockerhub-anis-credentials')
