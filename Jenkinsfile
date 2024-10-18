@@ -39,30 +39,17 @@ pipeline {
          }
      }
 
-        stage('Build') {
-                    steps {
-                        script {
-                            sh "docker build -t anisfetoui/AnisFETOUI-5se1-DevDynamos:latest ."
-                        }
-                    }
-                }
+    stage('Docker Build & Push') {
+        steps {
+            script {
+                withDockerRegistry(credentialsId: 'anisfetoui'){
+                    sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION} ."
+                    sh "docker push anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION}"
+            }
+            }
+        }
+    }
 
-     stage('Docker Login') {
-         steps {
-             script {
-                     sh "docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-             }
-         }
-         }
-
-
-        stage('Push Docker Image') {
-                    steps {
-                        script {
-                            sh "docker push anisfetoui/AnisFETOUI-5se1-DevDynamos:latest"
-                        }
-                    }
-                }
     }
 
 
