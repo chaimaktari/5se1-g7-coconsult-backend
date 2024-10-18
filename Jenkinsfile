@@ -14,7 +14,7 @@ pipeline {
         stage('Compile') {
             steps {
                 script {
-                    // Compiler le projet avec Maven
+
                     sh 'mvn clean compile '
                 }
             }
