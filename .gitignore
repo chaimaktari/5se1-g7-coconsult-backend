@@ -29,3 +29,5 @@ build/
 
 ### VS Code ###
 .vscode/
+/test/java/com/bezkoder/springjwt/RecrutementServiceTest.java
+/test/java/com/bezkoder/springjwt/RhServiceTest
