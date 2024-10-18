@@ -42,7 +42,7 @@ pipeline {
     stage('Docker Build & Push') {
         steps {
             script {
-                withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
+                withDockerRegistry(credentialsId: 'dockerhub-pass'){
                     sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION} ."
                     sh "docker push anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION}"
             }
