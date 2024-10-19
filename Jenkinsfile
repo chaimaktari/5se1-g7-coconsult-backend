@@ -12,15 +12,14 @@ pipeline {
         }
 
        stage('Clean, Build & Test') {
-            agent { label 'agent1' }
-            steps {
+              steps {
                 sh '''
                     mvn clean install
                     mvn jacoco:report
                 '''
             }
         }
-
+    }
     post {
         always {
             echo "Pipeline finished"
