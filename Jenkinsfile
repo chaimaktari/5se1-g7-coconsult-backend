@@ -11,24 +11,15 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+       stage('Clean, Build & Test') {
+            agent { label 'agent1' }
             steps {
-                script {
-
-                    sh 'mvn clean compile '
-                }
+                sh '''
+                    mvn clean install
+                    mvn jacoco:report
+                '''
             }
         }
-
-        stage('Build') {
-            steps {
-                script {
-
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
-    }
 
     post {
         always {
