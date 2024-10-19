@@ -99,16 +99,18 @@ stage('Push Docker Image') {
             }
         }
         
-    }
-    post {
-        always {
-            echo "Pipeline finished"
-        }
+    } post {
         success {
-            echo "Build succeeded!!"
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
+            }
         }
         failure {
-            echo "Build failed!"
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
+            }
         }
     }
 }
