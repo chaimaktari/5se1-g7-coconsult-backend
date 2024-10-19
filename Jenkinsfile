@@ -1,7 +1,6 @@
-
 pipeline {
     agent any 
- environment {
+    environment {
         DOCKER_IMAGE = 'ktarichaima-g7-coconsult'  // Dynamic Docker image name
         IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
     }
@@ -14,14 +13,15 @@ pipeline {
             }
         }
 
-       stage('Clean, Build & Test') {
-              steps {
+        stage('Clean, Build & Test') {
+            steps {
                 sh '''
                     mvn clean install
                     mvn jacoco:report
                 '''
             }
         }
+
         stage('Static Analysis') {
             environment {
                 SONAR_URL = "http://192.168.88.130:9000/"
@@ -29,16 +29,17 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonar-credentials', variable: 'SONAR_TOKEN')]) {
                     sh '''
-                         mvn sonar:sonar \
+                        mvn sonar:sonar \
                         -Dsonar.login=${SONAR_TOKEN} \
                         -Dsonar.host.url=${SONAR_URL} \
                         -Dsonar.java.binaries=target/classes \
-                        -Dsonar.coverage.jacoco.xmlReportPaths=/target/site/jacoco/jacoco.xml
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                     '''
                 }
             }
         }
-       stage('Upload to Nexus') {
+
+        stage('Upload to Nexus') {
             steps {
                 script {
                     echo "Deploying to Nexus..."
@@ -64,8 +65,8 @@ pipeline {
                 }
             }
         }
-    
-     stage('Build Docker Image') {
+
+        stage('Build Docker Image') {
             steps {
                 script {
                     def nexusUrl = "http://192.168.88.130:9001"
@@ -83,8 +84,8 @@ pipeline {
                 }
             }
         }
-stage('Push Docker Image') {
-        
+
+        stage('Push Docker Image') {
             environment {
                 DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
             }
@@ -98,8 +99,8 @@ stage('Push Docker Image') {
                 }
             }
         }
-        
-    } post {
+    }
+    post {
         success {
             script {
                 slackSend(channel: '#jenkins-msg', 
