@@ -35,6 +35,35 @@ pipeline {
                 }
             }
         }
+       stage('Upload to Nexus') {
+            steps {
+                script {
+                    echo "Deploying to Nexus..."
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "192.168.88.130:9001",
+                        groupId: 'com.bezkoder',
+                        artifactId: 'CoConsult',
+                        version: '1.0',
+                        repository: "maven-central-repository",
+                        credentialsId: "nexus-credentials",
+                        artifacts: [
+                            [
+                                artifactId: 'CoConsult',
+                                classifier: '',
+                                file: 'target/CoConsult.jar', 
+                                type: 'jar'
+                            ]
+                        ]
+                    )
+                    echo "Deployment to Nexus completed!"
+                }
+            }
+        }
+    
+    
+    
     }
     post {
         always {
