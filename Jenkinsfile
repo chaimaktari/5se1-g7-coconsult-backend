@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Static Analysis') {
             environment {
-                SONAR_URL = "http://192.168.88.130:9000/"
+                SONAR_URL = "http://192.168.226.128:9000/"
             }
             steps {
                 withCredentials([string(credentialsId: 'sonar-credentials', variable: 'SONAR_TOKEN')]) {
@@ -34,7 +34,7 @@ pipeline {
                 }
             }
         }
-            192.168.226.128
+            
     }
     
 
