@@ -11,21 +11,12 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+       stage('Clean, Build & Test') {
             steps {
-                script {
-                    // Compiler le projet avec Maven
-                    sh 'mvn clean compile '
-                }
-            }
-        }
-
-        stage('Build') {
-            steps {
-                script {
-
-                    sh 'mvn clean package -DskipTests'
-                }
+                sh '''
+                    mvn clean install
+                    mvn jacoco:report
+                '''
             }
         }
     }
