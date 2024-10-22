@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE = 'mohamedazizgrami-g7-coconsult'  // Dynamic Docker image name
+        IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
+    }
 
     stages {
         stage('Checkout GIT') {
@@ -64,7 +68,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def nexusUrl = "http://192.168.88.130:9001"
+                    def nexusUrl = "http://192.168.226.128:9001"
                     def groupId = "com.bezkoder"
                     def artifactId = "CoConsult"
                     def version = "1.0"
