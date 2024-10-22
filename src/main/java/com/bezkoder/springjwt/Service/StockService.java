@@ -117,7 +117,7 @@ public class StockService implements IStockService {
     }
 
 
-    private int determineQuantityToAdd(Stock stock) {
+    public int determineQuantityToAdd(Stock stock) {
 
 
         ResourcesCategorie categorie = stock.getCategorieStock();
