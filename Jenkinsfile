@@ -68,7 +68,7 @@ stage('Upload to Nexus') {
  stage('Build Docker Image') {
             steps {
                 script {
-                    def nexusUrl = "http://192.168.88.130:9001"
+                    def nexusUrl = "http://192.168.254.130:9001"
                     def groupId = "com.bezkoder"
                     def artifactId = "CoConsult"
                     def version = "1.0"
