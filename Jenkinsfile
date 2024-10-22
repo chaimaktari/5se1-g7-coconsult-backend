@@ -1,7 +1,7 @@
 pipeline {
     agent any 
 environment {
-        DOCKER_IMAGE = 'bouafourazahra-g7-coconsult'  // Dynamic Docker image name
+        DOCKER_IMAGE = 'zahraeloulabou-g7-coconsult'  // Dynamic Docker image name
         IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
     }
     stages {
