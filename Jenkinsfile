@@ -49,7 +49,7 @@ stage('Upload to Nexus') {
                         nexusUrl: "192.168.254.130:9001",
                         groupId: 'com.bezkoder',
                         artifactId: 'CoConsult',
-                        version: '1.0',
+                        version: '1.2',
                         repository: "maven-central-repository",
                         credentialsId: "nexus-credentials",
                         artifacts: [
