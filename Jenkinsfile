@@ -52,11 +52,14 @@ pipeline {
     stage('Sonar Analysis') {
             steps {
                 script {
-                    sh "mvn sonar:sonar -Dsonar.url=http://192.168.33.10:9000/ -Dsonar.login=squ_4eff4cf86e03b423a9e187646586f80b538aecc1
-                    -Dsonar.projectName=DevDynamos \
-                                        -Dsonar.java.binaries=. \
-                                        -Dsonar.projectKey=DevDynamos
-                    "
+                    sh """
+                        mvn sonar:sonar \
+                        -Dsonar.url=http://192.168.33.10:9000/ \
+                        -Dsonar.login=squ_4eff4cf86e03b423a9e187646586f80b538aecc1 \
+                        -Dsonar.projectName=DevDynamos \
+                        -Dsonar.java.binaries=. \
+                        -Dsonar.projectKey=DevDynamos
+                    """
                 }
             }
         }
