@@ -5,7 +5,6 @@ import com.bezkoder.springjwt.models.*;
 import com.bezkoder.springjwt.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -28,13 +27,16 @@ public class ServiceConge implements IServiceConge {
 
     private JavaMailSender emailSender;
 
+    private static final String ERROR_KEY = "error";
+
+
     public  ResponseEntity<?> SendEmailConge(Long id, Conge conge) {
         Employee employee = employeeRepo.findById(id).get();
         List<User> users = userRepository.findAll();
         User user = new User();
 
         for (User u : users){
-            if(employee.getUserId() ==u.getId()){
+            if(employee.getUserId().equals(u.getId())){
                 user=u;
             }
         }
@@ -55,7 +57,7 @@ public class ServiceConge implements IServiceConge {
         List<Employee> employees = employeeRepo.findAll();
         Employee employee = new Employee();
         for (Employee u : employees){
-            if(u.getUserId() ==id){
+            if(u.getUserId().equals(id)){
                 employee=u;
             }
         }
@@ -98,15 +100,15 @@ public class ServiceConge implements IServiceConge {
             long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMilliseconds);
 
             if (employee.getNbrJourConge() < 0 ) {
-                errorResponse.put("error", "there is any days left.");            }
+                errorResponse.put(ERROR_KEY, "there is any days left.");            }
             if ( employee.getNbrJourConge()<differenceInDays
             ) {
-                errorResponse.put("error", "Too much days.");
+                errorResponse.put(ERROR_KEY, "Too much days.");
             }
             if ( conge.getDate_debut().after(conge.getDate_fin())) {
-                errorResponse.put("error", "Invalid conge request. Please check your inputs.");
+                errorResponse.put(ERROR_KEY, "Invalid conge request. Please check your inputs.");
             }else{
-                errorResponse.put("error", "Check with the administration.");
+                errorResponse.put(ERROR_KEY, "Check with the administration.");
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
@@ -132,7 +134,7 @@ public class ServiceConge implements IServiceConge {
         if (congeIdToUpdate != null) {
             overlappingConges = overlappingConges.stream()
                     .filter(c -> !c.getId_conge().equals(congeIdToUpdate))
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         return overlappingConges.isEmpty();
@@ -160,15 +162,15 @@ public class ServiceConge implements IServiceConge {
             long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMilliseconds);
 
             if (employee.getNbrJourConge() < 0 ) {
-                errorResponse.put("error", "there is any days left.");            }
+                errorResponse.put(ERROR_KEY, "there is any days left.");            }
             if ( employee.getNbrJourConge()<differenceInDays
                    ) {
-                errorResponse.put("error", "Too much days.");
+                errorResponse.put(ERROR_KEY, "Too much days.");
             }
             if ( updatedConge.getDate_debut().after(updatedConge.getDate_fin())) {
-                errorResponse.put("error", "Invalid conge request. Please check your inputs.");
+                errorResponse.put(ERROR_KEY, "Invalid conge request. Please check your inputs.");
             }else{
-                errorResponse.put("error", "Check with the administration.");
+                errorResponse.put(ERROR_KEY, "Check with the administration.");
 
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
@@ -206,7 +208,7 @@ public class ServiceConge implements IServiceConge {
     public Map<CongeType, Integer> calculerNombreCongesParType() {
         List<Conge> conges = congeRepo.findAll();
 
-        Map<CongeType, Integer> nombreCongesParType = new HashMap<>();
+        Map<CongeType, Integer> nombreCongesParType = new EnumMap<>(CongeType.class);
 
         for (Conge conge : conges) {
             CongeType typeConge = conge.getTypeC();

@@ -3,7 +3,6 @@ pipeline {
     environment {
             DOCKER_IMAGE = "anisfetoui-5se1-devdynamos"
             BRANCH_NAME = "feature-AnisFETOUI"
-            IMAGE_VERSION = "${BUILD_NUMBER}"
             DOCKERHUB_CREDENTIALS = credentials('dockerhub-anis-credentials')
         }
 
@@ -43,12 +42,24 @@ pipeline {
         steps {
             script {
                 withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
-                    sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION} ."
-                    sh "docker push anisfetoui/${DOCKER_IMAGE}:${IMAGE_VERSION}"
+                    sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                 #   sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             }
             }
         }
     }
+
+    stage('Sonar Analysis') {
+            steps {
+                script {
+                    sh "mvn sonar:sonar -Dsonar.url=http://192.168.33.10:9000/ -Dsonar.login=squ_4eff4cf86e03b423a9e187646586f80b538aecc1
+                    -Dsonar.projectName=DevDynamos \
+                                        -Dsonar.java.binaries=. \
+                                        -Dsonar.projectKey=DevDynamos
+                    "
+                }
+            }
+        }
 
     }
 
