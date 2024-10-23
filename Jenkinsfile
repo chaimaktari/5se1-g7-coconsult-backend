@@ -1,6 +1,10 @@
 
 pipeline {
     agent any 
+     environment {
+        DOCKER_IMAGE = 'imenhadjyahya-g7-coconsult'  // Dynamic Docker image name
+        IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
+    }
 
     stages {
         stage('Checkout GIT') {
