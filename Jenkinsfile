@@ -18,7 +18,10 @@ pipeline {
         stage('Compile') {
             steps {
                 script {
-                    sh 'mvn clean package -DskipTests'
+                    sh '''
+                    mvn clean package -DskipTests
+                    mvn jacoco:report
+                    '''
                 }
             }
         }
@@ -58,7 +61,8 @@ pipeline {
                         -Dsonar.login=squ_4eff4cf86e03b423a9e187646586f80b538aecc1 \
                         -Dsonar.projectName=DevDynamos \
                         -Dsonar.java.binaries=. \
-                        -Dsonar.projectKey=DevDynamos
+                        -Dsonar.projectKey=DevDynamos \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
                     """
                 }
             }
