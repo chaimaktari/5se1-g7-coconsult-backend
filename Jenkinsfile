@@ -1,7 +1,7 @@
-
 pipeline {
     agent any 
-     environment {
+
+    environment {
         DOCKER_IMAGE = 'imenhadjyahya-g7-coconsult'  // Dynamic Docker image name
         IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
     }
@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-       stage('Clean, Build & Test') {
+        stage('Clean, Build & Test') {
             steps {
                 sh '''
                     mvn clean install
@@ -23,6 +23,7 @@ pipeline {
                 '''
             }
         }
+
         stage('Static Analysis') {
             environment {
                 SONAR_URL = "http://192.168.150.128:9000/"
@@ -39,7 +40,8 @@ pipeline {
                 }
             }
         }
-         stage('Upload to Nexus') {
+
+        stage('Upload to Nexus') {
             steps {
                 script {
                     echo "Deploying to Nexus..."
@@ -64,9 +66,9 @@ pipeline {
                     echo "Deployment to Nexus completed!"
                 }
             }
-    }
-    }
-    stage('Build Docker Image') {
+        }
+
+        stage('Build Docker Image') {
             steps {
                 script {
                     def nexusUrl = "http://192.168.150.128:9001"
@@ -99,5 +101,5 @@ pipeline {
                 }
             }
         }
+    }
 }
-    
