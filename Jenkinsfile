@@ -45,7 +45,7 @@ pipeline {
                         nexusUrl: "192.168.150.128:9001",
                         groupId: 'com.bezkoder',
                         artifactId: 'CoConsult',
-                        version: '1.0',
+                        version: '1.3',
                         repository: "maven-central-repository",
                         credentialsId: "nexus-credentials",
                         artifacts: [
