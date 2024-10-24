@@ -78,8 +78,8 @@ pipeline {
                                 groupId: 'com.bezkoder',
                                 artifactId: 'DevDynamos',
                                 version: '${BUILD_NUMBER}',
-                                repository: "NEXUS_REPOSITORY",
-                                credentialsId: "NEXUS_CREDENTIAL_ID",
+                                repository: NEXUS_REPOSITORY,
+                                credentialsId: NEXUS_CREDENTIAL_ID,
                                 artifacts: [
                                     [
                                         artifactId: 'DevDynamos',
