@@ -1,17 +1,9 @@
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-alpine
 
-# Define build arguments for Nexus configuration
-ARG NEXUS_URL
-ARG GROUP_ID
-ARG ARTIFACT_ID
-ARG VERSION
+WORKDIR /app
 
-# Construct the Nexus download URL based on these arguments
-RUN apk add --no-cache curl && \
-    curl -o app.jar "$NEXUS_URL/repository/maven-central-repository/$(echo $GROUP_ID | tr . /)/$ARTIFACT_ID/$VERSION/$ARTIFACT_ID-$VERSION.jar"
+COPY target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the application port
-EXPOSE 9012
+EXPOSE 8080
 
-# Run the Spring Boot application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
