@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    environment {
-            BRANCH_NAME = "feature-nacer"
-            DOCKERHUB_CREDENTIALS = credentials('docker-credentials-nacer')
-        }
+    // environment {
+    //         BRANCH_NAME = "feature-nacer"
+    //         DOCKERHUB_CREDENTIALS = credentials('docker-credentials-nacer')
+    //     }
 
     stages {
         stage('Checkout GIT') {
@@ -40,17 +40,45 @@ pipeline {
             }
         }
 
-        stage('Docker Build & Push') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-credentials-nacer'){
-                        sh "docker build -t akacha08/nacer_devdynamos:${BUILD_NUMBER} ."
-                        sh "docker push akacha08/nacer_devdynamos:${BUILD_NUMBER}"
-                    }
-                }
-            }
-        }
+ stage('Build Docker Image') {
+    steps {
+        script {
+            echo 'Building Docker image'
+            def imageName = 'nacer_devdynamos' // Nom de votre dépôt Docker Hub
+            def dockerHubCredentials = 'docker-credentials-nacer' // Assurez-vous que cela correspond à votre ID d'identification Jenkins
+            sh "ls -la target/"
 
+            sh "docker build -t ${dockerHubCredentials}/${imageName}:latest ."
+
+
+            // withCredentials([usernamePassword(credentialsId: dockerHubCredentials, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            //     sh "echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin"
+            // }
+
+
+            // sh "docker push ${dockerHubCredentials}/${imageName}:latest"
+        }
+    }
+}
+
+
+
+
+        // stage('Sonar Analysis') {
+        //     steps {
+        //         script {
+        //             sh """
+        //                 mvn sonar:sonar \
+        //                 -Dsonar.url=http://192.168.33.10:9000/ \
+        //                 -Dsonar.login=squ_4eff4cf86e03b423a9e187646586f80b538aecc1 \
+        //                 -Dsonar.projectName=DevDynamos \
+        //                 -Dsonar.java.binaries=. \
+        //                 -Dsonar.projectKey=DevDynamos \
+        //                 -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+        //             """
+        //         }
+        //     }
+        // }
 
     }
 
