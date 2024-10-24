@@ -70,12 +70,18 @@ pipeline {
         stage('Upload to Nexus') {
                     steps {
                         script {
+                            pom = readMavenPom file: "pom.xml";
+                            filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                            artifactPath = filesByGlob[0].path;
+
+
+
                             echo "Deploying to Nexus..."
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
                                 nexusUrl: NEXUS_URL,
-                                groupId: 'com.bezkoder',
+                                groupId: pom.groupId,
                                 artifactId: 'spring-boot-security-jwt',
                                 version: '${BUILD_NUMBER}',
                                 repository: NEXUS_REPOSITORY,
@@ -84,8 +90,8 @@ pipeline {
                                     [
                                         artifactId: 'DevDynamos',
                                         classifier: '',
-                                        file: 'target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar',
-                                        type: 'jar'
+                                        file: artifactPath,
+                                        type: pom.packaging
                                     ]
                                 ]
                             )
@@ -101,7 +107,7 @@ pipeline {
             script {
                 withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
                     sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
-                    sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                //  sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             }
             }
         }
