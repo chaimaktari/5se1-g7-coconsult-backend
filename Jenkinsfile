@@ -1,115 +1,64 @@
 pipeline {
-    agent any 
-environment {
-        DOCKER_IMAGE = 'zahraeloulabou-g7-coconsult'  // Dynamic Docker image name
-        IMAGE_TAG = 'latest'  // Image tag (e.g., 'latest' or version)
-    }
+    agent any
+    environment {
+            BRANCH_NAME = "feature-nacer"
+            DOCKERHUB_CREDENTIALS = credentials('docker-credentials-nacer')
+        }
+
     stages {
         stage('Checkout GIT') {
             steps {
                 echo 'Pulling from Git'
-                git branch: 'zahra-bf',
-                    url: 'https://github.com/chaimaktari/5se1-g7-coconsult-backend.git'
+                git branch: 'feature-nacer',
+                    url: 'https://github.com/chaimaktari/5se1-g7-coconsult-backend.git',
+                    credentialsId: 'nacerID'
             }
         }
 
-       stage('Clean, Build & Test') {
+        stage('Compile') {
             steps {
-                sh '''
-                    mvn clean install
-                    mvn jacoco:report
-                '''
-            }
-        }
-
-stage('Static Analysis') {
-            environment {
-                SONAR_URL = "http://192.168.254.130:9000/"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'sonar-credentials', variable: 'SONAR_TOKEN')]) {
+                script {
                     sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.login=${SONAR_TOKEN} \
-                        -Dsonar.host.url=${SONAR_URL} \
-                        -Dsonar.java.binaries=target/classes \
-                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                    mvn clean package -DskipTests
+                    mvn jacoco:report
                     '''
                 }
             }
         }
 
-stage('Upload to Nexus') {
+        stage('Verify JAR') {
             steps {
                 script {
-                    echo "Deploying to Nexus..."
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: "192.168.254.130:9001",
-                        groupId: 'com.bezkoder',
-                        artifactId: 'CoConsult',
-                        version: '1.2',
-                        repository: "maven-central-repository",
-                        credentialsId: "nexus-credentials",
-                        artifacts: [
-                            [
-                                artifactId: 'CoConsult',
-                                classifier: '',
-                                file: 'target/CoConsult.jar', 
-                                type: 'jar'
-                            ]
-                        ]
-                    )
-                    echo "Deployment to Nexus completed!"
-                }
-            }
-        }
- stage('Build Docker Image') {
-            steps {
-                script {
-                    def nexusUrl = "http://192.168.254.130:9001"
-                    def groupId = "com.bezkoder"
-                    def artifactId = "CoConsult"
-                    def version = "1.0"
+                    def jarFiles = sh(script: 'ls target/*.jar', returnStdout: true).trim()
 
-                    sh """
-                        docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} \
-                        --build-arg NEXUS_URL=${nexusUrl} \
-                        --build-arg GROUP_ID=${groupId} \
-                        --build-arg ARTIFACT_ID=${artifactId} \
-                        --build-arg VERSION=${version} .
-                    """
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            environment {
-                DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-            }
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
-                        sh "docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
-                        sh "docker push $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                    if (jarFiles) {
+                        echo "JAR file created: ${jarFiles}"
+                    } else {
+                        error("JAR file not found!")
                     }
                 }
             }
         }
-        
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-credentials-nacer'){
+                        sh "docker build -t akacha08/nacer_devdynamos:${BUILD_NUMBER} ."
+                        sh "docker push akacha08/nacer_devdynamos:${BUILD_NUMBER}"
+                    }
+                }
+            }
+        }
+
+
     }
 
     post {
-        always {
-            echo "Pipeline finished"
-        }
-        success {
-            echo "Build succeeded!!"
-        }
         failure {
-            echo "Build failed!"
+            mail to: 'naceur.akacha@esprit.tn',
+                subject: "Échec du pipeline Jenkins - ${env.JOB_NAME} numero : #${env.BUILD_NUMBER}",
+                body: "Le pipeline Jenkins pour le Job ${env.JOB_NAME} a échoué lors de l'étape de création du livrable.\n\nVoir les détails ici : ${env.BUILD_URL}"
         }
     }
 }
