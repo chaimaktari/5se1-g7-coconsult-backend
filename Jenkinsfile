@@ -101,7 +101,7 @@ pipeline {
             script {
                 withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
                     sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
-                 //   sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                    sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             }
             }
         }
