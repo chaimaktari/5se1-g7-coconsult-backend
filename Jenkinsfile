@@ -76,7 +76,7 @@ pipeline {
                                 protocol: NEXUS_PROTOCOL,
                                 nexusUrl: NEXUS_URL,
                                 groupId: 'com.bezkoder',
-                                artifactId: 'DevDynamos',
+                                artifactId: 'spring-boot-security-jwt',
                                 version: '${BUILD_NUMBER}',
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
@@ -84,7 +84,7 @@ pipeline {
                                     [
                                         artifactId: 'DevDynamos',
                                         classifier: '',
-                                        file: 'target/DevDynamos.jar',
+                                        file: 'target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar',
                                         type: 'jar'
                                     ]
                                 ]
