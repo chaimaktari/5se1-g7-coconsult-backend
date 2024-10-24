@@ -5,7 +5,7 @@ pipeline {
             BRANCH_NAME = "feature-AnisFETOUI"
             DOCKERHUB_CREDENTIALS = credentials('dockerhub-anis-credentials')
 
-            SONAR_LOGIN_TOKEN = squ_4eff4cf86e03b423a9e187646586f80b538aecc1
+            SONAR_LOGIN_TOKEN = 'squ_4eff4cf86e03b423a9e187646586f80b538aecc1'
 
             NEXUS_VERSION = "nexus3"
             NEXUS_PROTOCOL = "http"
