@@ -110,8 +110,8 @@ pipeline {
         steps {
             script {
                 withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS){
-                    sh "docker build -t DOCKER_NAME/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
-                //  sh "docker push DOCKER_NAME/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                    sh "docker build -t ${DOCKER_NAME}/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                //  sh "docker push ${DOCKER_NAME}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             }
             }
         }
