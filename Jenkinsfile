@@ -1,25 +1,25 @@
 pipeline {
     agent any
     environment {
-            DOCKER_IMAGE = "anisfetoui-5se1-devdynamos"
             BRANCH_NAME = "feature-AnisFETOUI"
-            DOCKERHUB_CREDENTIALS = credentials('dockerhub-anis-credentials')
+
+            DOCKER_IMAGE = "anisfetoui-5se1-devdynamos"
+            DOCKERHUB_CREDENTIALS = 'dockerhub-anis-credentials'
+            DOCKER_NAME = 'anisfetoui'
 
             SONAR_CREDENTIAL_ID = "sonar-anis-credentials"
 
             NEXUS_VERSION = "nexus3"
             NEXUS_PROTOCOL = "http"
-            NEXUS_URL = "192.168.33.10:8081"
             NEXUS_REPOSITORY = "DevDynamos"
             NEXUS_CREDENTIAL_ID = "nexus-anis-credentials"
-            ARTIFACT_VERSION = "${BUILD_NUMBER}"
         }
 
     stages {
         stage('Checkout GIT') {
             steps {
                 echo 'Pulling from Git...'
-                git branch: 'feature-AnisFETOUI',
+                git branch: BRANCH_NAME,
                     url: 'https://github.com/chaimaktari/5se1-g7-coconsult-backend.git'
             }
         }
@@ -53,10 +53,13 @@ pipeline {
     stage('Sonar Analysis') {
             steps {
                 script {
-                withCredentials([string(credentialsId: SONAR_CREDENTIAL_ID, variable: 'TOKEN' )]) {
+                withCredentials([
+                string(credentialsId: SONAR_CREDENTIAL_ID, variable: 'TOKEN' ),
+                string(credentialsId: 'SONAR_URL', variable: 'SONAR_URL')
+                ]) {
                     sh """
                         mvn sonar:sonar \
-                        -Dsonar.url=http://192.168.33.10:9000/ \
+                        -Dsonar.url=${SONAR_URL} \
                         -Dsonar.login=${TOKEN} \
                         -Dsonar.projectName=DevDynamos \
                         -Dsonar.java.binaries=. \
@@ -75,15 +78,14 @@ pipeline {
                             filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
                             artifactPath = filesByGlob[0].path;
 
-
-
                             echo "Deploying to Nexus..."
+                            withCredentials([string(credentialsId: 'NEXUS_URL', variable: 'URL')]) {
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: NEXUS_URL,
+                                nexusUrl: URL,
                                 groupId: pom.groupId,
-                                artifactId: 'spring-boot-security-jwt',
+                                artifactId: pom.artifactId,
                                 version: '${BUILD_NUMBER}',
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
@@ -100,15 +102,16 @@ pipeline {
                         }
                     }
                 }
+            }
 
 
 
     stage('Docker Build & Push') {
         steps {
             script {
-                withDockerRegistry(credentialsId: 'dockerhub-anis-credentials'){
-                    sh "docker build -t anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
-                //  sh "docker push anisfetoui/${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                withDockerRegistry(credentialsId: DOCKERHUB_CREDENTIALS){
+                    sh "docker build -t DOCKER_NAME/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
+                //  sh "docker push DOCKER_NAME/${DOCKER_IMAGE}:${BUILD_NUMBER}"
             }
             }
         }
