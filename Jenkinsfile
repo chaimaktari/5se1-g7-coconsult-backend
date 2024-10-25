@@ -79,12 +79,11 @@ pipeline {
                             artifactPath = filesByGlob[0].path;
 
                             echo "Deploying to Nexus..."
-                            withCredentials([string(credentialsId: 'NEXUS_URL', variable: 'URL')]) {
-                            echo "Nexus URL: ${URL}"
+                            withCredentials([string(credentialsId: 'NEXUS_URL', variable: 'NEXUS_URL')]) {
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: '${NEXUS_URL}',
+                                nexusUrl: "http://${NEXUS_URL}",
                                 groupId: pom.groupId,
                                 version: "${BUILD_NUMBER}",
                                 repository: NEXUS_REPOSITORY,
