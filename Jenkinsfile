@@ -59,8 +59,8 @@ pipeline {
                 ]) {
                     sh '''
                         mvn sonar:sonar \
-                         -Dsonar.url=''' + sonarUrl + ''' \
-                         -Dsonar.login=''' + token + ''' \
+                         -Dsonar.url=''' + SONAR_URL + ''' \
+                         -Dsonar.login=''' + TOKEN + ''' \
                         -Dsonar.projectName=DevDynamos \
                         -Dsonar.java.binaries=. \
                         -Dsonar.projectKey=DevDynamos \
