@@ -57,15 +57,15 @@ pipeline {
                 string(credentialsId: SONAR_CREDENTIAL_ID, variable: 'TOKEN' ),
                 string(credentialsId: 'SONAR_URL', variable: 'SONAR_URL')
                 ]) {
-                    sh """
+                    sh '''
                         mvn sonar:sonar \
-                        -Dsonar.url=$SONAR_URL \
-                        -Dsonar.login=$TOKEN \
+                         -Dsonar.url=''' + sonarUrl + ''' \
+                         -Dsonar.login=''' + token + ''' \
                         -Dsonar.projectName=DevDynamos \
                         -Dsonar.java.binaries=. \
                         -Dsonar.projectKey=DevDynamos \
                         -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-                    """
+                    '''
                     }
                 }
             }
@@ -80,10 +80,11 @@ pipeline {
 
                             echo "Deploying to Nexus..."
                             withCredentials([string(credentialsId: 'NEXUS_URL', variable: 'URL')]) {
+                            echo "Nexus URL: ${URL}"
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: $URL,
+                                nexusUrl: "${URL}",
                                 groupId: pom.groupId,
                                 artifactId: "spring-boot-security-jwt",
                                 version: "${BUILD_NUMBER}",
