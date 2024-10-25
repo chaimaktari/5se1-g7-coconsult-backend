@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+        stage('Clean & Package') {
             steps {
                 script {
                     sh '''
@@ -36,7 +36,7 @@ pipeline {
         }
 
 
-     stage('Verify JAR') {
+     stage('Verify JAR exists') {
          steps {
              script {
                  def jarFiles = sh(script: 'ls target/*.jar', returnStdout: true).trim()
@@ -83,10 +83,10 @@ pipeline {
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: URL,
+                                nexusUrl: "${URL}",
                                 groupId: pom.groupId,
                                 artifactId: pom.artifactId,
-                                version: '${BUILD_NUMBER}',
+                                version: "${BUILD_NUMBER}",
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
                                 artifacts: [
@@ -118,8 +118,6 @@ pipeline {
     }
 
     }
-
-
 
       post {
             failure {
