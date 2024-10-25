@@ -86,7 +86,7 @@ pipeline {
                                 protocol: NEXUS_PROTOCOL,
                                 nexusUrl: "${URL}",
                                 groupId: pom.groupId,
-                                artifactId: "spring-boot-security-jwt",
+                                artifactId: pom.artifactId,
                                 version: "${BUILD_NUMBER}",
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
@@ -94,7 +94,7 @@ pipeline {
                                     [
                                         artifactId: 'DevDynamos',
                                         classifier: '',
-                                        file: artifactPath,
+                                        file: target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar,
                                         type: pom.packaging
                                     ]
                                 ]
