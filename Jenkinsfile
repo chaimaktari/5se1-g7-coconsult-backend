@@ -94,8 +94,8 @@ pipeline {
                                     [
                                         artifactId: 'DevDynamos',
                                         classifier: '',
-                                        file: target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar,
-                                        type: pom.packaging
+                                        file: 'target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar',
+                                        type: jar
                                     ]
                                 ]
                             )
