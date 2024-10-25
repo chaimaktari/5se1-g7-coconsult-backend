@@ -59,8 +59,8 @@ pipeline {
                 ]) {
                     sh """
                         mvn sonar:sonar \
-                        -Dsonar.url=${SONAR_URL} \
-                        -Dsonar.login=${TOKEN} \
+                        -Dsonar.url=$SONAR_URL \
+                        -Dsonar.login=$TOKEN \
                         -Dsonar.projectName=DevDynamos \
                         -Dsonar.java.binaries=. \
                         -Dsonar.projectKey=DevDynamos \
@@ -83,9 +83,9 @@ pipeline {
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: "${URL}",
+                                nexusUrl: $URL,
                                 groupId: pom.groupId,
-                                artifactId: pom.artifactId,
+                                artifactId: "spring-boot-security-jwt",
                                 version: "${BUILD_NUMBER}",
                                 repository: NEXUS_REPOSITORY,
                                 credentialsId: NEXUS_CREDENTIAL_ID,
