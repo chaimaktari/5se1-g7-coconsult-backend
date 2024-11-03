@@ -83,7 +83,7 @@ pipeline {
                             nexusArtifactUploader(
                                 nexusVersion: NEXUS_VERSION,
                                 protocol: NEXUS_PROTOCOL,
-                                nexusUrl: "http://${NEXUS_URL}",
+                                nexusUrl: "${NEXUS_URL}",
                                 groupId: pom.groupId,
                                 version: "${BUILD_NUMBER}",
                                 repository: NEXUS_REPOSITORY,
