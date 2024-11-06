@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         DOCKER_IMAGE = 'ktarichaima-g7-coconsult'  
-        IMAGE_TAG = '0.0.1'  
+        IMAGE_TAG = '0.0.2'  
     }
     stages {
         stage('Checkout GIT') {
@@ -49,7 +49,7 @@ pipeline {
                         nexusUrl: "192.168.88.130:9001",
                         groupId: 'com.bezkoder',
                         artifactId: 'CoConsult',
-                        version: '1.1',
+                        version: '1.2',
                         repository: "maven-central-repository",
                         credentialsId: "nexus-credentials",
                         artifacts: [
@@ -72,7 +72,7 @@ pipeline {
                     def nexusUrl = "http://192.168.88.130:9001"
                     def groupId = "com.bezkoder"
                     def artifactId = "CoConsult"
-                    def version = "1.1"
+                    def version = "1.2"
 
                     sh """
                         docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} \
