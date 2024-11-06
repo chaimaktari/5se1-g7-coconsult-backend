@@ -23,7 +23,7 @@ services:
     image: ktarichaima/ktarichaima-g7-coconsult:0.0.2
     container_name: backend-container
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/Coconsult?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.88.130:3307//Coconsult?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_SHOW_SQL: "true"
