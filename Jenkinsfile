@@ -1,7 +1,9 @@
-
 pipeline {
     agent any 
-
+    environment {
+        DOCKER_IMAGE = 'ktarichaima-g7-coconsult'  
+        IMAGE_TAG = '0.0.1'  
+    }
     stages {
         stage('Checkout GIT') {
             steps {
@@ -11,34 +13,113 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+        stage('Clean, Build & Test') {
             steps {
-                script {
+                sh '''
+                    mvn clean install
+                    mvn jacoco:report
+                '''
+            }
+        }
 
-                    sh 'mvn clean compile '
+        stage('Static Analysis') {
+            environment {
+                SONAR_URL = "http://192.168.88.130:9000/"
+            }
+            steps {
+                withCredentials([string(credentialsId: 'sonar-credentials', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        mvn sonar:sonar \
+                        -Dsonar.login=${SONAR_TOKEN} \
+                        -Dsonar.host.url=${SONAR_URL} \
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                    '''
                 }
             }
         }
 
-        stage('Build') {
+        stage('Upload to Nexus') {
             steps {
                 script {
-
-                    sh 'mvn clean package -DskipTests'
+                    echo "Deploying to Nexus..."
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "192.168.88.130:9001",
+                        groupId: 'com.bezkoder',
+                        artifactId: 'CoConsult',
+                        version: '1.1',
+                        repository: "maven-central-repository",
+                        credentialsId: "nexus-credentials",
+                        artifacts: [
+                            [
+                                artifactId: 'CoConsult',
+                                classifier: '',
+                                file: 'target/CoConsult.jar', 
+                                type: 'jar'
+                            ]
+                        ]
+                    )
+                    echo "Deployment to Nexus completed!"
                 }
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def nexusUrl = "http://192.168.88.130:9001"
+                    def groupId = "com.bezkoder"
+                    def artifactId = "CoConsult"
+                    def version = "1.1"
+
+                    sh """
+                        docker build -t ${DOCKER_IMAGE}:${IMAGE_TAG} \
+                        --build-arg NEXUS_URL=${nexusUrl} \
+                        --build-arg GROUP_ID=${groupId} \
+                        --build-arg ARTIFACT_ID=${artifactId} \
+                        --build-arg VERSION=${version} .
+                    """
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            environment {
+                DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+            }
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                        sh "docker tag ${DOCKER_IMAGE}:${IMAGE_TAG} $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                        sh "docker push $DOCKER_USERNAME/${DOCKER_IMAGE}:${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+           stage('Docker Compose Up') {
+            steps {
+                script {         
+                    sh 'docker-compose up -d'
+                }
+            }
+        }            
     }
-
+    }
     post {
-        always {
-            echo "Pipeline finished"
-        }
         success {
-            echo "Build succeeded!!"
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a réussi : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
+            }
         }
         failure {
-            echo "Build failed!"
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a échoué : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
+            }
         }
     }
 }
