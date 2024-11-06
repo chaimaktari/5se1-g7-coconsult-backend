@@ -2,7 +2,7 @@ pipeline {
     agent any 
     environment {
         DOCKER_IMAGE = 'ktarichaima-g7-coconsult'  
-        IMAGE_TAG = '0.0.2'  
+        IMAGE_TAG = '0.0.3'  
     }
     stages {
         stage('Checkout GIT') {
