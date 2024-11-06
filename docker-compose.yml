@@ -8,7 +8,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: Coconsult
     ports:
-      - "3306:3306"
+      - "3307:3307"
     networks:
       - my-network
     healthcheck:
@@ -23,7 +23,7 @@ services:
     image: ktarichaima/ktarichaima-g7-coconsult:0.0.2
     container_name: backend-container
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3307/Coconsult?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_SHOW_SQL: "true"
