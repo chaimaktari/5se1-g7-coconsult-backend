@@ -17,7 +17,6 @@ pipeline {
             steps {
                sh '''
                     docker start mysql-container2
-                    sleep 30
                     mvn clean install
                     mvn jacoco:report
                 '''
@@ -104,8 +103,7 @@ pipeline {
            stage('Docker Compose Up') {
             steps {
            script {   
-                    sh 'docker stop mysql-container2'
-                    sleep 30
+                    sh 'docker stop mysql-container2' 
                     sh 'docker-compose up -d'
                 }
             }
