@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.bezkoder</groupId>
 	<artifactId>CoConsult</artifactId>
-	<version>1.2</version>
+	<version>1.3</version>
 	<name>Coconsult</name>
 	<description>Demo project for Spring Boot Security - JWT</description>
 
