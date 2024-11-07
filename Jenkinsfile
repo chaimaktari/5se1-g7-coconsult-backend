@@ -16,9 +16,12 @@ pipeline {
         stage('Clean, Build & Test') {
             steps {
                sh '''
-                    docker start mysql-container2
+                    docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=Coconsult -p 3306:3306 -d mysql:8
+                    sleep 30
                     mvn clean install
                     mvn jacoco:report
+                    sleep 15
+                    docker rm mysql-test
                 '''
             }
         }
