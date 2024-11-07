@@ -20,7 +20,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   backend:
-     image: ktarichaima/ktarichaima-g7-coconsult:0.0.3
+    image: ktarichaima/ktarichaima-g7-coconsult:0.0.3
     container_name: backend-container
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
