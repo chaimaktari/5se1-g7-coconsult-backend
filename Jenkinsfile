@@ -21,6 +21,7 @@ pipeline {
                     mvn clean install
                     mvn jacoco:report
                     sleep 15
+                    docker stop mysql-test
                     docker rm mysql-test
                 '''
             }
