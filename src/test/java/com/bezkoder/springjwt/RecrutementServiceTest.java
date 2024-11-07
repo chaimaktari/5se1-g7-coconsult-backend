@@ -1,5 +1,4 @@
 package com.bezkoder.springjwt;
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.bezkoder.springjwt.Service.RhService;
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 @SpringBootTest
 public class RecrutementServiceTest {
 
@@ -34,11 +32,10 @@ public class RecrutementServiceTest {
 
     @Test
     public void testMajstatut() {
-        // Création de dates pour les tests
+
         LocalDateTime now = LocalDateTime.now();
         LocalDate dateCloture = LocalDate.now().minusDays(1);
 
-        // Création des objets de recrutement avec les statuts à tester
         Recrutement recrutement1 = new Recrutement();
         recrutement1.setDateCloture(dateCloture);
         recrutement1.setStatutRecrut(StatutRecrut.OUVERTE);
@@ -51,16 +48,12 @@ public class RecrutementServiceTest {
         recrutements.add(recrutement1);
         recrutements.add(recrutement2);
 
-        // Simulation du comportement du mock
         when(recrutementRepo.findAllByStatutRecrutement(StatutRecrut.OUVERTE)).thenReturn(recrutements);
 
-        // Appel du service
         recrutementService.Majstatut();
 
-        // Vérification des interactions avec le mock
-        verify(recrutementRepo).saveAll(anyList());
 
-        // Vérification que les statuts ont bien été mis à jour
+        verify(recrutementRepo).saveAll(anyList());
         assertEquals(StatutRecrut.CLOTURE, recrutement1.getStatutRecrut());
         assertEquals(StatutRecrut.OUVERTE, recrutement2.getStatutRecrut());
     }
