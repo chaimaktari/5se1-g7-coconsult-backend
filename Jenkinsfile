@@ -16,7 +16,7 @@ pipeline {
         stage('Clean, Build & Test') {
             steps {
                sh '''
-                    docker run --name mysql-container -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=Coconsult -p 3306:3306 -d mysql:8
+                    docker run --name mysql-test -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=Coconsult -p 3306:3306 -d mysql:8
                     sleep 30
                     mvn clean install
                     mvn jacoco:report
