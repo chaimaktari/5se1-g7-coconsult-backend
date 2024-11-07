@@ -106,9 +106,8 @@ pipeline {
         }
            stage('Docker Compose Up') {
             steps {
-           script {   
-                    sh 'docker stop mysql-container2' 
-                    sh 'docker-compose up -d'
+              script {   
+                    sh 'docker compose up -d'
                 }
             }
         }            
