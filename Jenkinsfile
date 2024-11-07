@@ -14,19 +14,25 @@ pipeline {
         }
 
         stage('Clean, Build & Test') {
-            steps {
-               sh '''
+    steps {
+        script {
+            try {
+                
+                sh '''
                     docker run --name mysql-test -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=Coconsult -p 3306:3306 -d mysql:8
-                    sleep 30
-                    mvn clean install
-                    mvn jacoco:report
-                    sleep 15
-                    docker stop mysql-test
-                    docker rm mysql-test
+                    sleep 30  # Attente pour que MySQL soit prêt
+                    mvn clean install  # Construction du projet
+                    mvn jacoco:report  # Rapport Jacoco
+                '''
+            } finally {
+                 sh '''
+                    docker stop mysql-test || true
+                    docker rm mysql-test || true
                 '''
             }
         }
-
+    }
+}
         stage('Static Analysis') {
             environment {
                 SONAR_URL = "http://192.168.88.130:9000/"
