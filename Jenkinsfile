@@ -51,12 +51,6 @@ pipeline {
          }
      }
 
-     stage('Rapport JaCoCo') {
-         steps {
-             sh 'mvn test'
-         }
-     }
-
 
 
     stage('Sonar Analysis') {
