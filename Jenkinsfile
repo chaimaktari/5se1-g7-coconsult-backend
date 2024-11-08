@@ -98,7 +98,15 @@ stage('Upload to Nexus') {
                 }
             }
         }
-        
+        stage('Docker Compose Up') {
+            steps {
+                script {
+                    // Assuming your docker-compose.yml is in the same directory
+                    echo "Starting Docker Compose"
+                    sh 'docker-compose -f docker-compose.yml up -d'  // Starts your services in detached mode
+                }
+            }
+        } 
     }
 
     post {
