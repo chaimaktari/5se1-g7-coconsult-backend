@@ -103,7 +103,7 @@ stage('Upload to Nexus') {
 
     post {
         always {
-            echo "Pipeline finished"
+            echo "Pipeline finished!"
         }
         success {
             echo "Build succeeded!!"
