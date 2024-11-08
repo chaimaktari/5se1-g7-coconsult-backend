@@ -1,6 +1,6 @@
 services:
   anisfetoui-5se1-devdynamos:
-    image: anisfetoui/anisfetoui-5se1-devdynamos
+    image: anisfetoui/anisfetoui-5se1-devdynamos:latest
     ports:
       - "8090:8090"
     depends_on:
