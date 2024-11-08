@@ -1,6 +1,6 @@
 FROM openjdk:17-jdk-alpine
 
-# Define build arguments for Nexus configuration
+# Define build arguments for Nexus configurations
 ARG NEXUS_URL
 ARG GROUP_ID
 ARG ARTIFACT_ID
