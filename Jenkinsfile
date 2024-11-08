@@ -122,7 +122,7 @@ pipeline {
             stage('Docker compose (BackEnd MySql)') {
                 steps {
                     script {
-                        sh 'docker compose up -d'
+                        sh 'docker-compose up -d'
                     }
                 }
             }
