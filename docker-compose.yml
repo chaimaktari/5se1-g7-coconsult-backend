@@ -1,46 +1,32 @@
+version: '3'
 services:
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: Coconsult
-    ports:
-      - "3306:3306"
-    networks:
-      - my-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - mysql-data:/var/lib/mysql
-
   backend:
-    image: ktarichaima/ktarichaima-g7-coconsult:0.0.4
+    image: ktarichaima/ktarichaima-g7-coconsult:latest  
     container_name: backend-container
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ""
-      SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-      SERVER_PORT: 8090
-      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
-      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
+      - SPRING_PROFILES_ACTIVE=prod
     ports:
       - "8090:8090"
-    depends_on:
-      mysql:
-        condition: service_healthy
     networks:
-      - my-network
+      - backend-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coconsult
+    ports:
+      - "330:63306"
+    networks:
+      - backend-network
+    volumes:
+      - db-data:/var/lib/mysql  # Volume persistant pour stocker les données de la base de données
 
 networks:
-  my-network:
+  backend-network:
     driver: bridge
 
 volumes:
-  mysql-data:
+  db-data:  # Déclaration du volume persistant pour la base de données
