@@ -1,7 +1,7 @@
-version: "3"
+version: "3.7"
 services:
   anisfetoui-5se1-devdynamos:
-    image: anisfetoui/anisfetoui-5se1-devdynamos
+    image: anisfetoui/anisfetoui-5se1-devdynamos:latest
     ports:
       - "8090:8090"
     depends_on:
@@ -13,9 +13,8 @@ services:
     restart: unless-stopped
     ports:
       - 3306:3306
-
     environment:
-      - MYSQL_DATABASE=db
+      - MYSQL_DATABASE=Coconsult
       - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
 
