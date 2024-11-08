@@ -115,7 +115,7 @@ pipeline {
                    // sh "docker build -t ${DOCKER_NAME}/${DOCKER_IMAGE}:${BUILD_NUMBER} ."
                    // sh "docker push ${DOCKER_NAME}/${DOCKER_IMAGE}:${BUILD_NUMBER}"
                     sh "docker build -t ${DOCKER_NAME}/${DOCKER_IMAGE}:latest ."
-                    sh "docker push ${DOCKER_NAME}/${DOCKER_IMAGE}:latest"
+                    // sh "docker push ${DOCKER_NAME}/${DOCKER_IMAGE}:latest"
             }
             }
         }
