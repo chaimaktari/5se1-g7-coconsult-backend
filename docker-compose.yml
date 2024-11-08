@@ -1,0 +1,20 @@
+version: "3"
+services:
+  anisfetoui-5se1-devdynamos:
+    image: anisfetoui/anisfetoui-5se1-devdynamos
+    ports:
+      - "8090:8090"
+    depends_on:
+      - mysqldb
+  mysqldb:
+    image: mysql:8
+    container_name: mysqldb
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+
+    environment:
+      - MYSQL_DATABASE=db
+      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
