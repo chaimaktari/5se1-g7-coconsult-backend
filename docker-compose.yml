@@ -6,6 +6,7 @@ services:
       - "8090:8090"
     depends_on:
       - mysqldb
+
   mysqldb:
     image: mysql:8
     container_name: mysqldb
