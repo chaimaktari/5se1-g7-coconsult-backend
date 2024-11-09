@@ -16,25 +16,13 @@ pipeline {
         }
 
          stage('Clean, Build & Test') {
-    steps {
-        script {
-            try {
-                
+            steps {
                 sh '''
-                    docker run --name mysql-test -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=Coconsult -p 3306:3306 -d mysql:8
-                    sleep 30  # Attente pour que MySQL soit prêt
-                    mvn clean install  # Construction du projet
-                    mvn jacoco:report  # Rapport Jacoco
-                '''
-            } finally {
-                 sh '''
-                    docker stop mysql-test || true
-                    docker rm mysql-test || true
+                    mvn clean install
+                    mvn jacoco:report
                 '''
             }
         }
-    }
-}
 
         stage('Static Analysis') {
             environment {
