@@ -11,6 +11,8 @@ services:
       - backend-network
     depends_on:
       - db
+    volumes:
+      - backend-data:/path/in/container
 
   db:
     image: mysql:5.7
