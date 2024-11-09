@@ -1,0 +1,32 @@
+version: '3'
+services:
+  backend:
+    image: aziztesteur/aziztesteur-g7-coconsult:latest  
+    container_name: backend-container
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    ports:
+      - "8090:8090"
+    networks:
+      - backend-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coconsult
+    ports:
+      - "3307:3306"
+    networks:
+      - backend-network
+    volumes:
+      - db-data:/var/lib/mysql  # Volume persistant pour stocker les données de la base de données
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  db-data:  # Déclaration du volume persistant pour la base de données
