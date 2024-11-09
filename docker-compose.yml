@@ -5,6 +5,8 @@ services:
     container_name: backend-container
     environment:
       - SPRING_PROFILES_ACTIVE=prod
+        MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     ports:
       - "8090:8090"
     networks:
