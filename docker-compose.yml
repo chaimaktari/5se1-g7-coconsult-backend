@@ -1,56 +1,46 @@
-version: '3'
 services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: Coconsult
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - mysql-data:/var/lib/mysql
+
   backend:
-    image: aziztesteur/aziztesteur-g7-coconsult:latest  
+    image: aziztesteur/aziztesteur-g7-coconsult:0.0.4
     container_name: backend-container
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SERVER_PORT: 8090
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     ports:
       - "8090:8090"
-    networks:
-      - backend-network
     depends_on:
-      - db
-
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: coconsult
-    ports:
-      - "3307:3306"
+      mysql:
+        condition: service_healthy
     networks:
-      - backend-network
-    volumes:
-      - db-data:/var/lib/mysql  # Volume persistant pour stocker les données de la base de données
-
-  nexus:
-    image: sonatype/nexus3
-    container_name: nexus-container
-    ports:
-      - "8081:8081"
-    networks:
-      - backend-network
-    volumes:
-      - nexus-data:/nexus-data  # Volume persistant pour les données Nexus
-
-  sonarqube:
-    image: sonarqube:latest
-    container_name: sonarqube-container
-    ports:
-      - "9000:9000"
-    networks:
-      - backend-network
-    volumes:
-      - sonarqube-data:/opt/sonarqube/data  # Volume persistant pour les données SonarQube
-      - sonarqube-logs:/opt/sonarqube/logs  # Volume persistant pour les logs SonarQube
+      - my-network
 
 networks:
-  backend-network:
+  my-network:
     driver: bridge
 
 volumes:
-  db-data:  # Déclaration du volume persistant pour la base de données
-  nexus-data:  # Volume pour Nexus
-  sonarqube-data:  # Volume pour SonarQube
-  sonarqube-logs:  # Volume pour les logs SonarQube
+  mysql-data:
