@@ -24,9 +24,33 @@ services:
     volumes:
       - db-data:/var/lib/mysql  # Volume persistant pour stocker les données de la base de données
 
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus-container
+    ports:
+      - "8081:8081"
+    networks:
+      - backend-network
+    volumes:
+      - nexus-data:/nexus-data  # Volume persistant pour les données Nexus
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube-container
+    ports:
+      - "9000:9000"
+    networks:
+      - backend-network
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data  # Volume persistant pour les données SonarQube
+      - sonarqube-logs:/opt/sonarqube/logs  # Volume persistant pour les logs SonarQube
+
 networks:
   backend-network:
     driver: bridge
 
 volumes:
   db-data:  # Déclaration du volume persistant pour la base de données
+  nexus-data:  # Volume pour Nexus
+  sonarqube-data:  # Volume pour SonarQube
+  sonarqube-logs:  # Volume pour les logs SonarQube
