@@ -4,8 +4,14 @@ services:
     image: ktarichaima/ktarichaima-g7-coconsult:latest  
     container_name: backend-container
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-        MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SERVER_PORT: 8090
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: "true"
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     ports:
       - "8090:8090"
