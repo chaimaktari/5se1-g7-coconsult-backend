@@ -2,7 +2,7 @@ version: '3'
 services:
   backend:
     image: imenhadjyahya/imenhadjyahya-g7-coconsult:latest  
-    container_name: backend-container
+    container_name: backend-containerr
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     ports:
