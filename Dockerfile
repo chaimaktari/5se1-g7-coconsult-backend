@@ -9,7 +9,7 @@ WORKDIR /app
 #RUN curl -o app.jar -L "http://142.767.33.21:8081/repository/maven-releases/com/bezkoder/DevDynamos/66/DevDynamos-66.jar"
 COPY target/spring-boot-security-jwt-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8090
 
 # Run the jar file
 CMD ["java", "-jar", "app.jar"]

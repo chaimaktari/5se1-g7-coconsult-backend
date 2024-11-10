@@ -3,17 +3,31 @@ services:
     image: anisfetoui/anisfetoui-5se1-devdynamos:latest
     ports:
       - "8090:8090"
+    networks:
+      - network
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://dbmysql:3306/Coconsult?createDatabaseIfNotExist=true&userSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=
     depends_on:
-      - mysqldb
+      - dbmysql
 
-  mysqldb:
+  dbmysql:
     image: mysql:8
-    container_name: mysqldb
+    container_name: dbmysql
     restart: unless-stopped
     ports:
-      - 3306:3306
+      - "3306:3306"
+    networks:
+      - network
+    volumes:
+      - db:/var/lib/mysql
     environment:
       - MYSQL_DATABASE=Coconsult
-      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
 
+  volumes:
+    db:
+  networks:
+    network:
+      driver: bridge
