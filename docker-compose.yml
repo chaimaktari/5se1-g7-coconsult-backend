@@ -12,22 +12,22 @@ services:
     depends_on:
       - dbmysql
 
-  dbmysql:
-    image: mysql:8
-    container_name: dbmysql
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    networks:
-      - network
-    volumes:
-      - db:/var/lib/mysql
-    environment:
-      - MYSQL_DATABASE=Coconsult
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-
-  volumes:
-    db:
+dbmysql:
+  image: mysql:8
+  container_name: dbmysql
+  restart: unless-stopped
+  ports:
+    - "3306:3306"
   networks:
-    network:
-      driver: bridge
+    - network
+  volumes:
+    - db:/var/lib/mysql
+  environment:
+    - MYSQL_DATABASE=Coconsult
+    - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+volumes:
+  db:
+networks:
+  network:
+    driver: bridge
