@@ -26,6 +26,27 @@ services:
       - MYSQL_DATABASE=Coconsult
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+  anisfetoui-5se1-devdynamos-frontend:
+    image: anisfetoui/anisfetoui-5se1-devdynamos-coconsult-frontend:latest
+    ports:
+      - "4200:80"
+    restart: always
+    networks:
+      - network
+
 volumes:
   db:
 networks:
