@@ -14,8 +14,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-     # - grafana-storage:/var/lib/grafana
-      - ./custom.ini:/etc/grafana/grafana.ini
+      - grafana-storage:/var/lib/grafana
+      # - ./custom.ini:/etc/grafana/grafana.ini
     networks:
       - monitoring
 
