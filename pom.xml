@@ -102,24 +102,6 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.6</version>
 		</dependency>
-		<!--
-		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>javax.mail</artifactId>
-			<version>1.6.2</version> or the latest version available -->
-		<!--</dependency>-->
-		<!--
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>javax:javaee-api</groupId>
-					<artifactId>javaee-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>-->
-		<!-- emailaziz -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
