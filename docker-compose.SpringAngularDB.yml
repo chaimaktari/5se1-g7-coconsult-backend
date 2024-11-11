@@ -30,7 +30,7 @@ services:
     image: gcr.io/cadvisor/cadvisor:latest
     container_name: cadvisor
     ports:
-      - '8080:8080'
+      - '7000:8080'
     restart: unless-stopped
     volumes:
       - /:/rootfs:ro
