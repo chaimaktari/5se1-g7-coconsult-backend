@@ -47,7 +47,7 @@ services:
     networks:
       - network
   mysql-exporter:
-    image: prom/mysql-exporter
+    image: prom/mysqld-exporter
     command:
       - --config.my-cnf=/cfg/.my.cnf
       - --mysqld.address=192.168.33.10:3306
