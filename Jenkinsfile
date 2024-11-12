@@ -111,4 +111,26 @@ pipeline {
             }
         } 
     }
+    post {
+        success {
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a réussi bon Travail! : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
+            }
+            mail to: 'hadjyahyaimen@gmail.com',
+                 subject: "Succès de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Détails : ${env.BUILD_URL}"
+        }
+        
+        failure {
+            script {
+                slackSend(channel: '#jenkins-msg', 
+                          message: "Le build a échoué ressayez : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
+            }
+            mail to: 'hadjyahyaimen@gmail.com',
+                 subject: "Échec de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                 body: "Détails : ${env.BUILD_URL}"
+        }
+    }
 }
+
