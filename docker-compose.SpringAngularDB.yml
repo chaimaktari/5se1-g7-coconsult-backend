@@ -46,6 +46,15 @@ services:
     restart: always
     networks:
       - network
+  mysql-exporter:
+    image: prom/mysql-exporter
+    command:
+      - --config.my-cnf=/cfg/.my.cnf
+      - --mysqld.address=192.168.33.10:3306
+    volumes:
+      - "./.my.cnf:/cfg/.my.cnf"
+    ports:
+      - "9104:9104"
 
 volumes:
   db:
