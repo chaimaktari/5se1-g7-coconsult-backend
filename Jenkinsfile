@@ -112,25 +112,28 @@ pipeline {
         } 
     }
     post {
-        success {
-            script {
-                slackSend(channel: '#jenkins-msg', 
-                          message: "Le build a réussi bon Travail! : ${env.JOB_NAME} #${env.BUILD_NUMBER} ! Image pushed: ${DOCKER_IMAGE}:${IMAGE_TAG} successfully.")
-            }
-            mail to: 'hadjyahyaimen@gmail.com',
-                 subject: "Succès de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "Détails : ${env.BUILD_URL}"
-        }
-        
-        failure {
-            script {
-                slackSend(channel: '#jenkins-msg', 
-                          message: "Le build a échoué ressayez : ${env.JOB_NAME} #${env.BUILD_NUMBER}.")
-            }
-            mail to: 'hadjyahyaimen@gmail.com',
-                 subject: "Échec de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
-                 body: "Détails : ${env.BUILD_URL}"
-        }
+    success {
+        emailext(
+            to: 'hadjyahyaimen@gmail.com',
+            subject: "Succès de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+            body: """
+                Le build a réussi pour le job ${env.JOB_NAME} [${env.BUILD_NUMBER}].
+                Vous pouvez consulter les détails du build ici : ${env.BUILD_URL}
+                Image poussée : ${DOCKER_IMAGE}:${IMAGE_TAG} avec succès.
+            """
+        )
+    }
+    
+    failure {
+        emailext(
+            to: 'hadjyahyaimen@gmail.com',
+            subject: "Échec de Build : ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+            body: """
+                Le build a échoué pour le job ${env.JOB_NAME} [${env.BUILD_NUMBER}].
+                Consultez les détails du build ici : ${env.BUILD_URL}
+            """
+        )
     }
 }
+
 
