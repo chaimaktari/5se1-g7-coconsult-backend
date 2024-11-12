@@ -53,6 +53,7 @@ services:
       - --mysqld.address=192.168.33.10:3306
     volumes:
       - "./.my.cnf:/cfg/.my.cnf"
+      - "/cfg"
     ports:
       - "9104:9104"
 
