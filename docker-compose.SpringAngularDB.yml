@@ -39,13 +39,13 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
 
-  anisfetoui-5se1-devdynamos-frontend:
-    image: anisfetoui/anisfetoui-5se1-devdynamos-coconsult-frontend:latest
-    ports:
-      - "4200:80"
-    restart: always
-    networks:
-      - network
+  #anisfetoui-5se1-devdynamos-frontend:
+   # image: anisfetoui/anisfetoui-5se1-devdynamos-coconsult-frontend:latest
+   # ports:
+    #  - "4200:80"
+    #restart: always
+    #networks:
+     # - network
   mysql-exporter:
     image: prom/mysqld-exporter
     command:
