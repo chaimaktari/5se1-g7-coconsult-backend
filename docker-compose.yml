@@ -10,8 +10,8 @@ services:
     networks:
       - backend-network
     depends_on:
-      db:
-        condition: service_healthy
+      - db
+    
 
   db:
     image: mysql:5.7
@@ -23,16 +23,11 @@ services:
     networks:
       - backend-network
     volumes:
-      - db-data:/var/lib/mysql  # Persistent volume for database data
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - db-data:/var/lib/mysql  # Volume persistant pour stocker les données de la base de données
 
 networks:
   backend-network:
     driver: bridge
 
 volumes:
-  db-data:  # Persistent volume for MySQL
+  db-data:  # Déclaration du volume persistant pour la base de données
