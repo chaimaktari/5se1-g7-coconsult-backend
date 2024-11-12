@@ -159,7 +159,7 @@
 			<plugin>
             <groupId>org.sonarsource.scanner.maven</groupId>
             <artifactId>sonar-maven-plugin</artifactId>
-            <version>4.0.0.2929</version> <!-- Specify the version here -->
+           
         </plugin>
 		</plugins>
 		<finalName>CoConsult</finalName>
