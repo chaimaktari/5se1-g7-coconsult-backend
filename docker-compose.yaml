@@ -18,7 +18,7 @@ services:
       - 3306:3306
       
     environment:
-      - MYSQL_DATABASE=db
+      - MYSQL_DATABASE=Coconsult
       - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
 
