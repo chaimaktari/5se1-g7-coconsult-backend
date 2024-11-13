@@ -89,6 +89,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                   .requestMatchers("/coconsult/**").permitAll()
                   .requestMatchers("/recrutement/**").permitAll()
                   .requestMatchers("/DetailsRect/**").permitAll()
+                           .requestMatchers("/signup").permitAll()
+
 
                             .requestMatchers("/", "/static/**").permitAll()
 
