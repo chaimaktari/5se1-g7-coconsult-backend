@@ -13,22 +13,6 @@ services:
       - "9000:9000"
     restart: unless-stopped
 
-  dbmysql:
-    image: mysql:8
-    container_name: dbmysql
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    networks:
-      - network
-    volumes:
-      - db:/var/lib/mysql
-    environment:
-      - MYSQL_DATABASE=Coconsult
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-
-volumes:
-  db:
 networks:
   network:
     driver: bridge
