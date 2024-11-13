@@ -1,0 +1,28 @@
+version: "3"
+services:
+  springboot:
+    image: akacha08/5SE1g7CoConsult
+    container_name: springboot
+    hostname: springboot
+    restart: unless-stopped
+    ports:
+      - "8087:8087"
+   
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    container_name: db_mysql
+    hostname: db_mysql
+    restart: unless-stopped
+    ports:
+      - 3306:3306
+      
+    environment:
+      - MYSQL_DATABASE=db
+      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+    volumes:
+      - mysql_data:/var/lib/mysql   
