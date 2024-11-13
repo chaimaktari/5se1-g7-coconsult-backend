@@ -1,7 +1,7 @@
 version: "3"
 services:
   springboot:
-    image: akacha08/5SE1g7CoConsult
+    image: akacha08/5SE1g7CoConsult:v0
     container_name: springboot
     hostname: springboot
     restart: unless-stopped
