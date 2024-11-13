@@ -1,0 +1,30 @@
+services:
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  sonarqube:
+    image: sonarqube:9.9-community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    restart: unless-stopped
+
+  dbmysqlTest:
+    image: mysql:8
+    container_name: dbmysqlTest
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=Coconsult
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+volumes:
+  db:
+    external: true
