@@ -18,7 +18,7 @@ services:
       - mysql-data:/var/lib/mysql
 
   backend:
-    image: aziztesteur/aziztesteur-g7-coconsult:0.0.4
+    image: aziztesteur/aziztesteur-g7-coconsult:latest
     container_name: backend-container
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Coconsult?createDatabaseIfNotExist=true
