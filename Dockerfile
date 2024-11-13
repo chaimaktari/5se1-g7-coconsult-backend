@@ -2,7 +2,7 @@ FROM openjdk:17-alpine
 
 WORKDIR /app
 
-COPY target/CoConsult.jar app.jar
+COPY target/CoConsult-1.0.0.jar app.jar
 
 EXPOSE 8080
 
