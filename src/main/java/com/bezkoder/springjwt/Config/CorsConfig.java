@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("http://192.168.33.10:4200") // Autoriser les requêtes depuis Angular (localhost:4200)
+                .allowedOriginPatterns("http://localhost:4200") // Autoriser les requêtes depuis Angular (localhost:4200)
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Autoriser les méthodes HTTP spécifiées
                 .allowedHeaders("Content-Type", "Authorization") // Autoriser les en-têtes spécifiés
                 .allowCredentials(true); // Autoriser les cookies avec les requêtes
