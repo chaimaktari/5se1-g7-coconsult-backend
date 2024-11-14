@@ -23,6 +23,6 @@ public class Departement implements Serializable {
     @OneToMany(mappedBy="departement",fetch = FetchType.EAGER)
     @JsonIgnore
 
-    Set<Employee> employees;
+    private Set<Employee> employees;
 
 }

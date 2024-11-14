@@ -42,7 +42,7 @@ public class ServiceContratEmpl implements IServiceContratEmpl {
     EmployeeRepo employeeRepo;
     UserRepository userRepository;
 
-    final static String error = "error";
+    static final String error = "error";
 
 
     @Override

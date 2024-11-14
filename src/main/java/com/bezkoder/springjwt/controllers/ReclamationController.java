@@ -22,8 +22,7 @@ public class ReclamationController {
     @GetMapping("/retrieve-all-reclamations")
     @ResponseBody
     public List<Reclamation> getReclamations() {
-        List<Reclamation> reclamationList = reclamationService.retrieveAllReclamations();
-        return reclamationList;
+        return reclamationService.retrieveAllReclamations();
     }
 
 
@@ -41,16 +40,14 @@ public class ReclamationController {
         r.setStatusReclamation(ReclamationStatus.PENDING);
         Date date = new Date();
         r.setReclamationDate(date);
-        Reclamation reclamation= reclamationService.addReclamation(r);
-        return reclamation;
+        return reclamationService.addReclamation(r);
     }
 
 
     @PutMapping("/update-reclamation")
     @ResponseBody
     public Reclamation updateReclamation(@RequestBody Reclamation r) {
-        Reclamation reclamation= reclamationService.updateReclamation(r);
-        return reclamation;
+        return reclamationService.updateReclamation(r);
     }
 
     @DeleteMapping("/removeReclamation/{idRec}")

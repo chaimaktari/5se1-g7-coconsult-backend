@@ -317,9 +317,8 @@ public class ServiceImp implements Iservice {
         }
 
         // Calculer la progression du projet
-        double progression = (totalDurationCompletedTasks / totalDurationAllTasks) * 100.0;
 
-        return progression;
+        return (totalDurationCompletedTasks / totalDurationAllTasks) * 100.0;
     }
 
 
@@ -424,146 +423,6 @@ public class ServiceImp implements Iservice {
         }
     }
 
-
-
-
-    /*public Consultant addAndAssignConsultantToProjects(Consultant consultant, List<Long> projectIds) {
-        if (consultant == null  || projectIds.isEmpty()) {
-            throw new IllegalArgumentException("Consultant and at least one project must be provided.");
-        }
-
-        // Récupérer les projets à partir de leurs IDs
-        List<Project> projects = projectRepository.findAllById(projectIds);
-
-        // Mettre à jour la liste des consultants pour chaque projet
-        for (Project project : projects) {
-            if (project.getConsultants() == null) {
-                project.setConsultants(new ArrayList<>());
-            }
-            project.getConsultants().add(consultant);
-        }
-
-        // Mettre à jour la liste des projets pour le consultant
-        if (consultant.getProjects() == null) {
-            consultant.setProjects(new ArrayList<>());
-        }
-        consultant.getProjects().addAll(projects);
-
-        // Enregistrer le consultant mis à jour
-        Consultant savedConsultant = consultantRepository.save(consultant);
-
-        // Retourner le consultant avec les projets affectés
-        return savedConsultant;
-    }
-
-    public Consultant addConsultant(Consultant C) {
-        return consultantRepository.save(C);
-    }
-
-    public void assignConsultantsToProject(Long projectId, List<Long> consultantIds) {
-        // Récupérer le projet par son identifiant
-        Project project = projectRepository.findById(projectId).orElse(null);
-        if (project == null) {
-            // Gérer le cas où le projet n'existe pas
-            throw new IllegalArgumentException("Le projet avec l'identifiant " + projectId + " n'existe pas.");
-        }
-
-        // Récupérer les consultants par leurs identifiants
-        List<Consultant> consultants = consultantRepository.findAllById(consultantIds);
-
-        // Affecter les consultants au projet
-        project.setConsultants(consultants);
-
-        // Enregistrer les modifications dans la base de données
-        projectRepository.save(project);
-    }
-
-    @Override
-    public Consultant addConsultant(Consultant C) {
-        return null;
-    }
-
-    @Override
-    public void deleteConsultant(Long id) {
-
-    }
-
-    public void deleteConsultant(Long id) {
-        Consultant consultant = consultantRepository.findById(id).orElse(null);
-        if (consultant == null) {
-            // Si le consultant n'existe pas, ne rien faire
-            return;
-        }
-        // Retirer le consultant de tous les projets auxquels il est associé
-        consultant.getProjects().forEach(project -> project.getConsultants().remove(consultant));
-        // Supprimer le consultant lui-même
-        consultantRepository.delete(consultant);
-    }
-
-    public Consultant updateConsultant(Long id, Consultant updatedConsultant) {
-        Consultant existingConsultant = consultantRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Aucun consultant trouvé avec l'ID : " + id));
-        if (existingConsultant != null) {
-            // Mettre à jour les champs du consultant existant avec les nouvelles valeurs
-            existingConsultant.setName(updatedConsultant.getName());
-            existingConsultant.setAvailability(updatedConsultant.isAvailability());
-            existingConsultant.setSkills(updatedConsultant.getSkills());
-            existingConsultant.setHourlyRate(updatedConsultant.getHourlyRate());
-            existingConsultant.setHoursWorked(updatedConsultant.getHoursWorked());
-
-            // Enregistrer les modifications dans la base de données
-            consultantRepository.save(existingConsultant);
-        } else {
-            throw new IllegalArgumentException("Consultant with ID " + id + " not found");
-        }
-        return existingConsultant;
-    }
-
-
-
-
-    public List<Consultant> getAllConsultants() {
-        return consultantRepository.findAll();
-    }
-
-
-    public List<Consultant> getConsultantsByProject(Long projectId) {
-
-        return consultantRepository.findByProjectsProjectid(projectId);
-    }
-
-
-    public ResponseEntity<Consultant> getConsultantById(Long id) {
-        Optional<Consultant> consultantOptional = consultantRepository.findById(id);
-        if (consultantOptional.isPresent()) {
-            return new ResponseEntity<>(consultantOptional.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-    }
-
-
-    public Consultant assignProjectsToConsultant(Long consultantId, List<Long> projectIds) {
-        Consultant consultant = consultantRepository.findById(consultantId)
-                .orElseThrow(() -> new EntityNotFoundException("Consultant not found with id: " + consultantId));
-
-        List<Project> projects = projectRepository.findAllByIdIn(projectIds);
-
-        // Ajoutez le consultant aux projets sélectionnés
-        for (Project project : projects) {
-            project.getConsultants().add(consultant);
-        }
-
-        // Mettez à jour les projets dans la base de données
-        projectRepository.saveAll(projects);
-
-        return consultant;
-    }
-
-*/
-
-
     public Consultant addConsultantAndAssignToProject(Long projectId, Consultant consultant) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new NoSuchElementException("Aucun projet trouvé avec l'ID : " + projectId));
@@ -616,11 +475,9 @@ public class ServiceImp implements Iservice {
     public List<Task> getAllTasksSortedByDueDate() {
         List<Task> tasks = taskRepository.findAll();
 
-        List<Task> sortedTasks = tasks.stream()
+        return tasks.stream()
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .collect(Collectors.toList());
-
-        return sortedTasks;
     }
 
 

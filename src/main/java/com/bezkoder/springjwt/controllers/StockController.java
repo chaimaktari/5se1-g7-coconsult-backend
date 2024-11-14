@@ -3,10 +3,8 @@ package com.bezkoder.springjwt.controllers;
 import com.bezkoder.springjwt.Service.IStockService;
 import com.bezkoder.springjwt.models.Stock;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -20,8 +18,7 @@ public class StockController {
     @GetMapping("/retrieve-all-stocks")
     @ResponseBody
     public List<Stock> getStocks() {
-        List<Stock> stockList = stockService.retrieveAllStocks();
-        return stockList;
+        return stockService.retrieveAllStocks();
     }
 
 
@@ -63,16 +60,14 @@ public class StockController {
         String quality = qualityChoices[random.nextInt(qualityChoices.length)]; // Randomly select one from the array
         s.setQuality(quality);
         s.setReplenishmentAlert(false);
-        Stock stock= stockService.addStock(s);
-        return stock;
+        return stockService.addStock(s);
     }
 
 
     @PutMapping("/update-stock")
     @ResponseBody
     public Stock updateStock(@RequestBody Stock s) {
-        Stock stock= stockService.updateStock(s);
-        return stock;
+        return stockService.updateStock(s);
     }
 
     @DeleteMapping("/removeStock/{idStock}")
@@ -85,8 +80,7 @@ public class StockController {
     @ResponseBody
     public Stock assignResourceToStock(@PathVariable("stockId") Long stockId, @PathVariable("resourceId") Long resourceId) {
 
-        Stock stock = stockService.affecterRessourceAStock(resourceId, stockId);
-        return stock ;
+        return stockService.affecterRessourceAStock(resourceId, stockId);
     }
 
     @GetMapping("/quality-trend")

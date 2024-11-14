@@ -49,7 +49,6 @@ public class Candidat  implements Serializable {
     public Candidat(String cvUrl) {
 
         this.cvUrl = cvUrl;
-        this.prenom = prenom;
 
 
     }

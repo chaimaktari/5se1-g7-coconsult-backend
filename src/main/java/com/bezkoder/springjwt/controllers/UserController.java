@@ -125,9 +125,9 @@ public class UserController {
     }
 
     @GetMapping("/getbyusername/{username}")
-    public ResponseEntity<User> getUserByUserName(@PathVariable String username) throws IOException {
+    public ResponseEntity<User> getUserByUserName(@PathVariable String username) {
         try{
-            return new ResponseEntity<User>(userService.getUserByUserName(username), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserByUserName(username), HttpStatus.OK);
         }catch (UserNotFoundException e){
             return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
         }

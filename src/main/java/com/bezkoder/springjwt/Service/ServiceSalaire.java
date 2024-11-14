@@ -39,7 +39,7 @@ public class ServiceSalaire implements IServiceSalaire {
 
             Set<ContratEmployee> Contracts = employee.getContratEmployees();
             for (ContratEmployee ce : Contracts) {
-                if (!ce.getIsArchive()) {
+                if (Boolean.FALSE.equals(ce.getIsArchive())) {
                     ContratEmployee ContraEmp = ce;
                 }
             }
@@ -77,7 +77,7 @@ public class ServiceSalaire implements IServiceSalaire {
         Set<ContratEmployee> Contracts = employee.getContratEmployees();
         ContratEmployee ContraEmp = null;
         for (ContratEmployee ce : Contracts) {
-            if (!ce.getIsArchive()) {
+            if (Boolean.FALSE.equals(ce.getIsArchive())) {
                 ContraEmp = ce;
             }
         }
@@ -156,7 +156,7 @@ public class ServiceSalaire implements IServiceSalaire {
         for(Employee em : employees) {
             Set<SalaireEmployee> salaireEmployees = em.getSalaireEmployees();
             for (SalaireEmployee se : salaireEmployees) {
-                if (se.getIsArchive() == false) {
+                if (!Boolean.TRUE.equals(se.getIsArchive())) {
                     nb += se.getTotal_salaire();
                 }
             }
@@ -210,7 +210,7 @@ public class ServiceSalaire implements IServiceSalaire {
         List<Employee> employees = employeeRepo.findAll();
         for (Employee employee : employees) {
             for (ContratEmployee contratEmployee : employee.getContratEmployees()) {
-                if (!contratEmployee.getIsArchive()) {
+                if (Boolean.FALSE.equals(contratEmployee.getIsArchive())) {
                     currentSalary += contratEmployee.getSalaire_base();
                     incrementAmount = currentSalary * (contratEmployee.getPourcentage() / 100);
                 }
@@ -226,7 +226,7 @@ public class ServiceSalaire implements IServiceSalaire {
         Employee employee = employeeRepo.findById(employeeId).orElse(null);
 
         for (ContratEmployee contratEmployee : employee.getContratEmployees()) {
-            if (!contratEmployee.getIsArchive()) {
+            if (Boolean.FALSE.equals(contratEmployee.getIsArchive())) {
                 contratEmployee.setSalaire_base(newSalary);
                 iServiceContratEmpl.updateContratEmployee(contratEmployee,employeeId);
             }

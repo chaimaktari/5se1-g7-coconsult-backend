@@ -139,7 +139,6 @@ public class RhService  implements  IRhService {
     public void Majstatut() {
 
         List<Recrutement> recrutements = recrutementRepo.findAllByStatutRecrutement(StatutRecrut.OUVERTE);
-        LocalDateTime now = LocalDateTime.now();
         for (Recrutement recrutement : recrutements) {
             LocalDate dateCloture = recrutement.getDateCloture();
             if (dateCloture != null && dateCloture.isBefore(LocalDate.now())) {
@@ -221,15 +220,6 @@ public class RhService  implements  IRhService {
         System.out.println("Message envoyé : " + message.getSid());
         // Retourner le détail de recrutement mis à jour
         return detailRecrt; }
-
-    public void sendSms(String to, String from, String body) {
-        com.twilio.rest.api.v2010.account.Message message = Message.creator(
-                new PhoneNumber(to),
-                new PhoneNumber(from),
-                body
-        ).create();}
-
-
 
 
     public List<LocalDate> getAllRendezVousDates() {

@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -29,15 +27,13 @@ public class ResourceController {
     @GetMapping("/retrieve-all-resources")
     @ResponseBody
     public List<Resources> getResources() {
-        List<Resources> resourcesList = resourcesService.retrieveAllResources();
-        return resourcesList;
+        return resourcesService.retrieveAllResources();
     }
 
     @GetMapping("/retrieve-all-projects")
     @ResponseBody
     public List<Project> getProjects() {
-        List<Project> projectList = projectRepository.findAll();
-        return projectList;
+        return projectRepository.findAll();
     }
 
 
@@ -73,8 +69,7 @@ public class ResourceController {
     @PutMapping("/update-resource")
     @ResponseBody
     public Resources updateResource(@RequestBody Resources r) {
-        Resources resource= resourcesService.updateResource(r);
-        return resource;
+        return resourcesService.updateResource(r);
     }
 
     @DeleteMapping("/removeResource/{idRes}")

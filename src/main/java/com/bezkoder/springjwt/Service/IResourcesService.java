@@ -5,7 +5,6 @@ import com.bezkoder.springjwt.models.ResourceQuantityDTO;
 import com.bezkoder.springjwt.models.Resources;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IResourcesService {
     List<Resources> retrieveAllResources();

@@ -15,7 +15,6 @@ public interface Iservice {
     ResponseEntity<Project> getProjectById(Long id);
     List<Task> getAllTasks ();
     Task addTaskAndAssignToProject(Long projectId, Task task);
-    //Consultant addConsultantAndAssignToProject(Long projectId, Consultant consultant);
     Task updateTask(Long taskId, Task updatedTask);
     ResponseEntity<Task> getTaskById(Long id);
     void deleteTask(Long taskId);
@@ -28,14 +27,7 @@ public interface Iservice {
     ResponseEntity<?> calculateStatisticsByType();
     List<Object[]> calculateProfitabilityForEachProject();
     ResponseEntity<?> getBestProjectOfTheYear();
-    // Consultant addAndAssignConsultantToProjects(Consultant consultant, List<Long> projectIds);
-    // void assignConsultantsToProject(Long projectId, List<Long> consultantIds);
-    // Consultant addConsultant(Consultant C);
-    // void deleteConsultant(Long id);
-    // Consultant updateConsultant(Long id, Consultant updatedConsultant);
-    // List<Consultant> getAllConsultants();
-    // List<Consultant> getConsultantsByProject(Long projectId);
-    // ResponseEntity<Consultant> getConsultantById(Long id);
+
 
     List<Object[]> calculateProfitabilityByYear();
     Team addTeam(Team team);
@@ -46,7 +38,6 @@ public interface Iservice {
     Team updateTeam(Long team_id, Team updatedTeam);
     void removeTeam(Long team_id);
     ResponseEntity<Team> getTeamById(Long id);
-    // Consultant assignProjectsToConsultant(Long consultantId, List<Long> projectIds);
     Consultant addConsultantAndAssignToProject(Long projectId, Consultant consultant);
     List<User>getproductowners();
     List<Employee> getEmployeesByTeam(Long teamId);

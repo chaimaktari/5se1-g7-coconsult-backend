@@ -42,15 +42,13 @@ public class Controller {
     @GetMapping("/getAll")
     @ResponseBody
     public List<Project> getAllProjects() {
-        List<Project> projectList = iservice.getAllProjects();
-        return projectList;
+        return iservice.getAllProjects();
     }
 
     @GetMapping("/getAllT")
     @ResponseBody
     public List<Task> getAllTasks() {
-        List<Task> taskList = iservice.getAllTasks();
-        return taskList;
+        return iservice.getAllTasks();
     }
 
     @DeleteMapping("/removetask/{idtask}")
@@ -62,16 +60,14 @@ public class Controller {
 
     @PostMapping("/add-task/{projectId}")
     public Task addTaskAndAssignToProject(@PathVariable Long projectId, @RequestBody Task task) {
-        Task addedTask = iservice.addTaskAndAssignToProject(projectId, task);
-        return addedTask;
+        return iservice.addTaskAndAssignToProject(projectId, task);
     }
 
 
     @PutMapping("/updatetask/{idTask}")
     @ResponseBody
     public Task updateTask(@PathVariable("idTask") Long idTask, @RequestBody Task t) {
-        Task task = iservice.updateTask(idTask, t);
-        return task;
+        return iservice.updateTask(idTask, t);
     }
 
     @GetMapping("/task/{id}")
@@ -88,15 +84,13 @@ public class Controller {
     @GetMapping("/gettaskbyemployee/{username}")
     @ResponseBody
     List<Task> getAllTasksByEmployee(@PathVariable String username) {
-        List<Task> taskListemp = iservice.getAllTasksByEmployee(username);
-        return taskListemp;
+        return iservice.getAllTasksByEmployee(username);
     }
 
     @GetMapping("/gettaskbyproject/{projectId}")
     @ResponseBody
     List<Task> getTasksByProject(@PathVariable Long projectId) {
-        List<Task> taskListpr = iservice.getTasksByProject(projectId);
-        return taskListpr;
+        return iservice.getTasksByProject(projectId);
     }
 
     @PutMapping("/calculate-cost/{projectId}")
@@ -139,8 +133,7 @@ public class Controller {
     @PostMapping("/addTeam")
     @ResponseBody
     public Team addTeam(@RequestBody Team team) {
-        Team T = iservice.addTeam(team);
-        return T;
+        return iservice.addTeam(team);
     }
 
     @PutMapping("/assign-employees/{teamId}")
@@ -164,15 +157,13 @@ public class Controller {
     @ResponseBody
     public List<TeamDTO> getAllTeams() {
         List<Team> teamList = iservice.getAllTeams();
-        List<TeamDTO> list=teamList.stream().map((team -> TeamDTO.toDto(team))).toList();
-        return list;
+        return teamList.stream().map((team -> TeamDTO.toDto(team))).toList();
     }
 
     @PutMapping("/updateteam/{team_id}")
     @ResponseBody
     public Team updateTeam(@PathVariable("team_id") Long team_id, @RequestBody Team t) {
-        Team team = iservice.updateTeam(team_id, t);
-        return team;
+        return iservice.updateTeam(team_id, t);
     }
 
     @DeleteMapping("/removeteam/{team_id}")
@@ -187,8 +178,7 @@ public class Controller {
 
     @PostMapping("/addconsultant/{projectId}")
     public Consultant addConsultantAndAssignToProject(@PathVariable Long projectId, @RequestBody Consultant consultant) {
-        Consultant cons = iservice.addConsultantAndAssignToProject(projectId, consultant);
-        return cons;
+        return iservice.addConsultantAndAssignToProject(projectId, consultant);
     }
     @GetMapping("/getPo")
     public List<User> getallPO(){
@@ -196,8 +186,7 @@ public class Controller {
     }
     @PostMapping("/addteamaff/{projectId}/{iduser}")
     public Team addTeamAndAssignToProject(@PathVariable Long projectId, @RequestBody Team team,@PathVariable Long iduser) {
-        Team addedTeam = iservice.addTeamAndAssignToProject(team,projectId,iduser);
-        return addedTeam;
+        return iservice.addTeamAndAssignToProject(team,projectId,iduser);
     }
     @GetMapping("/getempl/{TeamId}")
     public List<Employee> getEmployeeByTeam(@PathVariable Long TeamId){

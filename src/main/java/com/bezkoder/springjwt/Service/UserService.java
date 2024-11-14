@@ -35,7 +35,7 @@ public class UserService {
     public void sendSurvey() {
         System.out.println("Envoi du sondage aux utilisateurs...");
 
-        String surveyId = generateSurveyId();
+    /*    String surveyId = generateSurveyId();
 
         String[] questions = {
                 "Comment évaluez-vous notre service client ?",
@@ -50,7 +50,7 @@ public class UserService {
                 {"Interface utilisateur plus intuitive", "Réduction des temps de chargement", "Personnalisation des paramètres", "Autre"}
         };
 
-
+*/
     }
 
     private String generateSurveyId() {

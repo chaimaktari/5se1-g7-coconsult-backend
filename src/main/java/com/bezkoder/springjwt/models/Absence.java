@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Absence implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_absence ;
+    private Long Id_absence ;
     private String motif ;
     private LocalDate date;
     private boolean validee;
@@ -24,7 +24,6 @@ public class Absence implements Serializable {
 
     Employee emp;
     @OneToOne(cascade = CascadeType.ALL)
-
     Image image;
 
 }

@@ -139,6 +139,7 @@ public class User {
 
 
   public void setResetToken(String resetToken) {
+    // TODO document why this method is empty
   }
 
 

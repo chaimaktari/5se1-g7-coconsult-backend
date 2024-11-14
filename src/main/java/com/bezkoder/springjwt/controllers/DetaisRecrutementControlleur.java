@@ -22,12 +22,7 @@ public class DetaisRecrutementControlleur {
     public DetailRecrutement proposerDateEntretien(@PathVariable("idCandidat") Long idCandidat, @RequestBody  DetailRecrutement detailRecrt) {
         return rhService.proposerDateEntretien(idCandidat, detailRecrt);
     }
-    /*
-        @GetMapping("/rendezvous")
-        public List<DetailRecrutement> getRendezVousByDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateEntretien) {
-            return rhService.getRendezVousByDate(dateEntretien);
-        }
-    */
+
     @GetMapping("/rendezvous")
     public List<LocalDate> getRendezVousDates() {
         return rhService.getAllRendezVousDates();

@@ -3,15 +3,12 @@ package com.bezkoder.springjwt.Service.interfaces;
 import com.bezkoder.springjwt.exceptions.ChatAlreadyExistException;
 import com.bezkoder.springjwt.exceptions.ChatNotFoundException;
 import com.bezkoder.springjwt.exceptions.NoChatExistsInTheRepository;
-import com.bezkoder.springjwt.exceptions.UserNotFoundException;
 import com.bezkoder.springjwt.models.Chat;
 import com.bezkoder.springjwt.models.Message;
-import com.bezkoder.springjwt.models.User;
 
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public interface ChatService {
 

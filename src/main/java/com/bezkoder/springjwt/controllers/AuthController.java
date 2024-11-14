@@ -98,6 +98,8 @@ public class AuthController {
 
   @PostMapping(value = "/signup", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<?> registerUser(@Valid @ModelAttribute SignupRequest signUpRequest) {
+
+    final String RoleNotFound = "Error: Role is not found.";
     // Vérifiez si le nom d'utilisateur est déjà pris
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity
@@ -122,34 +124,34 @@ public class AuthController {
     Set<Role> roles = new HashSet<>();
     if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+              .orElseThrow(() -> new RuntimeException(RoleNotFound));
       roles.add(userRole);
     } else {
       strRoles.forEach(role -> {
         switch (role) {
           case "admin":
             Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(adminRole);
             break;
           case "productowner":
             Role PownerRole = roleRepository.findByName(ERole.ROLE_PRODUCT_OWNER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(PownerRole);
             break;
           case "Rh":
             Role Rh = roleRepository.findByName(ERole.ROLE_RH)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(Rh);
             break;
           case "mod":
             Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(modRole);
             break;
           case "employee":
             Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(employeeRole);
 
             User savedUser = userRepository.save(user);
@@ -166,7 +168,7 @@ public class AuthController {
             break;
           default:
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    .orElseThrow(() -> new RuntimeException(RoleNotFound));
             roles.add(userRole);
         }
       });

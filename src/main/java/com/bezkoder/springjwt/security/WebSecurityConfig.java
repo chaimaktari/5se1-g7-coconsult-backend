@@ -5,17 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -32,7 +28,7 @@ import java.util.Arrays;
 @EnableMethodSecurity
 @EnableWebSecurity
 
-public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
   @Autowired
   UserDetailsServiceImpl userDetailsService;
 
@@ -82,6 +78,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    final String staticvariable = "/static/**";
     http.csrf(csrf -> csrf.disable())
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -102,13 +99,13 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                   .requestMatchers("/recrutement/**").permitAll()
                   .requestMatchers("/DetailsRect/**").permitAll()
 
-                            .requestMatchers("/", "/static/**").permitAll()
+                            .requestMatchers("/", staticvariable).permitAll()
 
                     .requestMatchers("/","/favicon.ico").permitAll()
-                    .requestMatchers("/", "/index.html", "/static/**").permitAll()
-                     .requestMatchers("/", "/login.html", "/static/**").permitAll()
-                      .requestMatchers("/", "/register.html", "/static/**").permitAll()
-                      .requestMatchers("/", "/videocall.html", "/static/**").permitAll()
+                    .requestMatchers("/", "/index.html", staticvariable).permitAll()
+                     .requestMatchers("/", "/login.html", staticvariable).permitAll()
+                      .requestMatchers("/", "/register.html", staticvariable).permitAll()
+                      .requestMatchers("/", "/videocall.html", staticvariable).permitAll()
                     // Autoriser l'accès aux API de connexion, déconnexion et gestion des utilisateurs
                     .requestMatchers("/api/v1/users/login/**").permitAll()
                          .requestMatchers("/","/api/v1/users/logout/**").permitAll()

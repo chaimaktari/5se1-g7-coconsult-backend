@@ -4,7 +4,6 @@ import com.bezkoder.springjwt.Service.IFournisseurService;
 import com.bezkoder.springjwt.models.Fournisseur;
 import com.bezkoder.springjwt.repository.FournisseurRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +22,7 @@ public class FournisseurController {
     @GetMapping("/retrieve-all-fournisseurs")
     @ResponseBody
     public List<Fournisseur> getFournisseurs() {
-        List<Fournisseur> fournisseurList = fournisseurService.retrieveAllFournisseurs();
-        return fournisseurList;
+        return fournisseurService.retrieveAllFournisseurs();
     }
 
 
@@ -38,16 +36,14 @@ public class FournisseurController {
     @PostMapping("/add-fournisseur")
     @ResponseBody
     public Fournisseur addFournisseur(@RequestBody Fournisseur r) {
-        Fournisseur fournisseur= fournisseurService.addFournisseur(r);
-        return fournisseur;
+        return fournisseurService.addFournisseur(r);
     }
 
 
     @PutMapping("/update-fournisseur")
     @ResponseBody
     public Fournisseur updateFournisseur(@RequestBody Fournisseur r) {
-        Fournisseur fournisseur= fournisseurService.updateFournisseur(r);
-        return fournisseur;
+        return fournisseurService.updateFournisseur(r);
     }
 
     @DeleteMapping("/removeFournisseur/{idF}")

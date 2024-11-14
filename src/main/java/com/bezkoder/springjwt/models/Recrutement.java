@@ -53,10 +53,10 @@ public class Recrutement implements Serializable {
     private List<Candidat> candidats;
 
     @ManyToMany
-    List<RH> rh;
+    private List<RH> rh;
 
     @OneToMany (mappedBy = "recrutements")
-    List<TestRecrutement>testRecrutements;
+    private List<TestRecrutement>testRecrutements;
 
 }
 

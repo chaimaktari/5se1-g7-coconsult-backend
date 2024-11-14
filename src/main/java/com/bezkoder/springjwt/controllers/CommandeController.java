@@ -22,15 +22,14 @@ public class CommandeController {
     @GetMapping("/retrieve-all-commandes")
     @ResponseBody
     public List<Commande> getCommandes() {
-        List<Commande> commandeList = commandeService.retrieveAllCommandes();
-        return commandeList;
+
+        return commandeService.retrieveAllCommandes();
     }
 
     @GetMapping("/retrieve-fournisseurByCateg/{categorie}")
     @ResponseBody
     public List<Fournisseur> retrieveFournisseurByCategorie( @PathVariable("categorie") ResourcesCategorie resourcesCategorie){
-        List<Fournisseur> fournisseurList = commandeService.retrieveFournisseurByCategorie(resourcesCategorie);
-        return  fournisseurList ;
+        return  commandeService.retrieveFournisseurByCategorie(resourcesCategorie) ;
 
     }
 
@@ -45,16 +44,14 @@ public class CommandeController {
     @PostMapping("/add-commande")
     @ResponseBody
     public Commande addCommande(@RequestBody Commande s) {
-        Commande stock= commandeService.addCommande(s);
-        return stock;
+        return commandeService.addCommande(s);
     }
 
 
     @PutMapping("/update-commande")
     @ResponseBody
     public Commande updateCommande(@RequestBody Commande s) {
-        Commande stock= commandeService.updateCommande(s);
-        return stock;
+        return commandeService.updateCommande(s);
     }
 
     @DeleteMapping("/removeCommande/{commandeId}")

@@ -28,7 +28,7 @@ import java.util.List;
         @OneToMany(mappedBy = "responsableRH")
         private List<Evenement> evenementsOrganises;
         @ManyToMany
-        List<Recrutement> recrutementRh;
+        private List<Recrutement> recrutementRh;
     }
 
 

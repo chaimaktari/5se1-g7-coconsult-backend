@@ -5,10 +5,8 @@ import com.bezkoder.springjwt.Service.interfaces.ChatService;
 import com.bezkoder.springjwt.exceptions.ChatAlreadyExistException;
 import com.bezkoder.springjwt.exceptions.ChatNotFoundException;
 import com.bezkoder.springjwt.exceptions.NoChatExistsInTheRepository;
-import com.bezkoder.springjwt.exceptions.UserNotFoundException;
 import com.bezkoder.springjwt.models.Chat;
 import com.bezkoder.springjwt.models.Message;
-import com.bezkoder.springjwt.models.User;
 import com.bezkoder.springjwt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -34,7 +31,7 @@ public class ChatController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) throws IOException {
+    public ResponseEntity<Chat> createChat(@RequestBody Chat chat) {
 
         try {
             return new ResponseEntity<Chat>(chatService.addChat(chat), HttpStatus.CREATED);
@@ -44,7 +41,7 @@ public class ChatController {
     }
 
     @PostMapping("/add/message1")
-    public ResponseEntity<Message> addMessage2(@RequestBody Message message) throws IOException {
+    public ResponseEntity<Message> addMessage2(@RequestBody Message message){
         return new ResponseEntity<Message>(chatService.addMessage2(message), HttpStatus.CREATED);
     }
 

@@ -89,12 +89,10 @@ public class ServiceClient implements IServiceClient{
     }
     @Override
     public Client getClient(Long id){
-        Client client = clientRep.findById(id).orElse(null);
-        return client;
+        return clientRep.findById(id).orElse(null);
     }
     @Override
     public void removeClient(Long id) {
-        Client client = clientRep.findById(id).orElse(null);
         clientRep.deleteById(id);
 
     }
@@ -113,14 +111,12 @@ public class ServiceClient implements IServiceClient{
     public List<rempcalendrier> fncavnace1(int daysThreshold) {
         LocalDateTime today = LocalDateTime.now();
         LocalDateTime dueDateThreshold = today.plusDays(daysThreshold);
-        List<rempcalendrier> rempcalendrier = clientRep.remplircalendrier(today, dueDateThreshold);
-        return rempcalendrier;
+        return  clientRep.remplircalendrier(today, dueDateThreshold);
     }
 @Override
     public List<depassagefacture> notifdepassage(){
         LocalDateTime today = LocalDateTime.now();
-        List<depassagefacture> depassagefactures = factureRep.notification(today);
-        return  depassagefactures;
+        return  factureRep.notification(today);
     }
 
 
@@ -137,14 +133,12 @@ public class ServiceClient implements IServiceClient{
 
     @Override
     public void removeContrat(Long id) {
-            Contract c = contartRep.findById(id).orElse(null);
         contartRep.deleteById(id);
 
     }
     @Override
     public Contract getContract(Long id){
-        Contract contract = contartRep.findById(id).orElse(null);
-        return contract;
+        return contartRep.findById(id).orElse(null);
     }
 
     @Override
@@ -203,7 +197,6 @@ public Long ajouterFacture(Facture f, Long idclient, Long idcontart){
     return factureRep.save(f).getIdFacture();}
     @Override
     public void removefacture(Long id) {
-        Facture c = factureRep.findById(id).orElse(null);
         factureRep.deleteById(id);
 
     }
@@ -310,8 +303,7 @@ public void sendContractReminders(Long id) {
 /*************/
 @Override
 public List<paymentpercentage> percentage(){
-    List<paymentpercentage> percentage = paimentRep.getPaymentTypePercentages();
-    return  percentage;
+    return  paimentRep.getPaymentTypePercentages();
 }
 
 
@@ -323,9 +315,9 @@ public List<paymentpercentage> percentage(){
 
         List<Integer> monthexistant = new ArrayList<>();
 
-        monthpaiment.forEach(existant->{
-            monthexistant.add(existant.getMonth());
-            });
+        monthpaiment.forEach(existant->
+            monthexistant.add(existant.getMonth())
+            );
         for (int i = 1; i <= 12; i++) {
             if (!monthexistant.contains(i)) {
                 monthpaiment.add(new MonthlyPaymentDTO(i, 0, BigDecimal.ZERO));
