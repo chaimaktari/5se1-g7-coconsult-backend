@@ -44,7 +44,7 @@ services:
     environment:
       API_URL: http://backend-container:8090  
     ports:
-      - "3500:3500"  
+      - "3500:80"  
     depends_on:
       - backend
     networks:
