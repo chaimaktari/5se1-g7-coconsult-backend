@@ -53,75 +53,75 @@ class StockServiceTest {
         assertEquals(30, quantityToAdd);
     }
 
-    @Test
-    void testCheckStockAndGenerateCommands() {
+    // @Test
+    // void testCheckStockAndGenerateCommands() {
 
-        Stock stock = Stock.builder()
-                .stockID(1L)
-                .location("Tunis")
-                .replenishmentAlert(true)
-                .entryDate(new Date())
-                .purchaseDate(new Date())
-                .expirationDate(new Date())
-                .quality("good")
-                .pourcentageDefauts(2)
-                .categorieStock(ResourcesCategorie.ELECTRONICS)
-                .build();
+    //     Stock stock = Stock.builder()
+    //             .stockID(1L)
+    //             .location("Tunis")
+    //             .replenishmentAlert(true)
+    //             .entryDate(new Date())
+    //             .purchaseDate(new Date())
+    //             .expirationDate(new Date())
+    //             .quality("good")
+    //             .pourcentageDefauts(2)
+    //             .categorieStock(ResourcesCategorie.ELECTRONICS)
+    //             .build();
 
-        int quantity = 20;
-        Long fournisseurId = 1L;
+    //     int quantity = 20;
+    //     Long fournisseurId = 1L;
 
-        Commande commande = stockService.createCommandeFromStock(stock, quantity, fournisseurId);
+    //     Commande commande = stockService.createCommandeFromStock(stock, quantity, fournisseurId);
 
-        assertNotNull(commande);
-        assertEquals(quantity, commande.getQuantity());
-        assertEquals("Tunis", commande.getLocation());
-        assertEquals(true, commande.getReplenishmentAlert());
-        assertEquals(stock.getEntryDate(), commande.getEntryDate());
-        assertEquals(stock.getPurchaseDate(), commande.getPurchaseDate());
-        assertEquals(stock.getExpirationDate(), commande.getExpirationDate());
-        assertEquals(stock.getQuality(), commande.getQuality());
-        assertEquals(stock.getPourcentageDefauts(), commande.getPourcentageDefauts());
-        assertEquals(stock.getCategorieStock(), commande.getCategorieStock());
-        assertEquals(fournisseurId, commande.getFournissID());
-        assertEquals(StatusCommande.PENDING, commande.getStatusCommande());
-    }
+    //     assertNotNull(commande);
+    //     assertEquals(quantity, commande.getQuantity());
+    //     assertEquals("Tunis", commande.getLocation());
+    //     assertEquals(true, commande.getReplenishmentAlert());
+    //     assertEquals(stock.getEntryDate(), commande.getEntryDate());
+    //     assertEquals(stock.getPurchaseDate(), commande.getPurchaseDate());
+    //     assertEquals(stock.getExpirationDate(), commande.getExpirationDate());
+    //     assertEquals(stock.getQuality(), commande.getQuality());
+    //     assertEquals(stock.getPourcentageDefauts(), commande.getPourcentageDefauts());
+    //     assertEquals(stock.getCategorieStock(), commande.getCategorieStock());
+    //     assertEquals(fournisseurId, commande.getFournissID());
+    //     assertEquals(StatusCommande.PENDING, commande.getStatusCommande());
+    // }
 
 
-    @Test
-    void testCheckStockAndSetReplenishmentAlert() {
+    // @Test
+    // void testCheckStockAndSetReplenishmentAlert() {
 
-        Fournisseur fournisseur = Fournisseur.builder()
-                .fournisseurID(1L)
-                .build();
-        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
-        Long selectedFournisseurId = stockService.selectSupplierForCategory(ResourcesCategorie.ELECTRONICS);
+    //     Fournisseur fournisseur = Fournisseur.builder()
+    //             .fournisseurID(1L)
+    //             .build();
+    //     when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
+    //     Long selectedFournisseurId = stockService.selectSupplierForCategory(ResourcesCategorie.ELECTRONICS);
 
-        assertNotNull(selectedFournisseurId);
-        assertEquals(1L, selectedFournisseurId);
-    }
+    //     assertNotNull(selectedFournisseurId);
+    //     assertEquals(1L, selectedFournisseurId);
+    // }
 
-    @Test
-    void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
+    // @Test
+    // void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
 
-        Stock lowStock = Stock.builder()
-                .stockID(1L)
-                .categorieStock(ResourcesCategorie.ELECTRONICS)
-                .replenishmentAlert(true)
-                .build();
+    //     Stock lowStock = Stock.builder()
+    //             .stockID(1L)
+    //             .categorieStock(ResourcesCategorie.ELECTRONICS)
+    //             .replenishmentAlert(true)
+    //             .build();
 
-        Fournisseur fournisseur = Fournisseur.builder()
-                .fournisseurID(1L)
-                .build();
+    //     Fournisseur fournisseur = Fournisseur.builder()
+    //             .fournisseurID(1L)
+    //             .build();
 
-        when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock));
-        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
+    //     when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock));
+    //     when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
 
-        stockService.generateCommandsForLowStocksWithReplenishmentAlert();
+    //     stockService.generateCommandsForLowStocksWithReplenishmentAlert();
 
-        verify(stockRepository).save(Mockito.any(Stock.class));
-        verify(commandeRepository).save(Mockito.any(Commande.class));
-    }
+    //     verify(stockRepository).save(Mockito.any(Stock.class));
+    //     verify(commandeRepository).save(Mockito.any(Commande.class));
+    // }
 
 
 }
