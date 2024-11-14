@@ -104,10 +104,15 @@ class StockServiceTest {
     @Test
     void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
 
+          Resources resource = Resources.builder()
+            .name("test") 
+            .build();
+
         Stock lowStock = Stock.builder()
                 .stockID(1L)
                 .categorieStock(ResourcesCategorie.ELECTRONICS)
                 .replenishmentAlert(true)
+                .resource(resource)
                 .build();
 
         Fournisseur fournisseur = Fournisseur.builder()
