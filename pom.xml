@@ -10,10 +10,12 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bezkoder</groupId>
-	<artifactId>CoConsult</artifactId>
-	<version>1.0.0</version>
-	<name>Coconsult</name>
-	<description>Demo project for Spring Boot Security - JWT</description>
+
+        <artifactId>CoConsult</artifactId>
+        <version>1.0.0</version>
+        <name>Coconsult</name>
+        <description>Demo project for Spring Boot Security - JWT</description>
+
 
 	<properties>
 		<java.version>17</java.version>
@@ -171,16 +173,16 @@
 			<artifactId>mockito-core</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+		  <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
 
-		<!-- Micrometer Prometheus Registry -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-		</dependency>
+    <!-- Micrometer Prometheus Registry -->
+    <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
 
 
 	</dependencies>
@@ -215,11 +217,13 @@
 	</build>
 
 	<distributionManagement>
-		<repository>
-			<id>deploymentRepo</id>
-			<name>Nexus Repository</name>
-			<url>http://localhost:8081/repository/maven-releases/</url>
-		</repository>
-	</distributionManagement>
+
+         <repository>
+                  <id>deploymentRepo</id>
+                  <name>Nexus Repository</name>
+                  <url>http://localhost:8081/repository/maven-releases/</url>
+         </repository>
+    </distributionManagement>
 
 </project>
+
