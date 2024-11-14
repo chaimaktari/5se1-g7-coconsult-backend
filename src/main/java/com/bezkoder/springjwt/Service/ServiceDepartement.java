@@ -31,13 +31,10 @@ public class ServiceDepartement implements IServiceDepartement {
                 .mapToInt(department -> {
                     int maxSaturation = department.getMaxSaturation();
                     int nbreEmpl = department.getNbreEmpl();
-                    int available = maxSaturation - nbreEmpl;
-                  //  System.out.println("Max Saturation: " + maxSaturation + ", Employees: " + nbreEmpl + ", Available: " + available);
-                    return available;
+                    return maxSaturation - nbreEmpl;
                 })
                 .sum();
-    //    System.out.println("Total Max Saturation: " + total);
-   //     System.out.println("Total Available Places: " + availablePlaces);
+
         return ResponseEntity.ok((double) availablePlaces);
     }
     public ResponseEntity<Double> calculateMax() {
@@ -47,7 +44,6 @@ public class ServiceDepartement implements IServiceDepartement {
         for (Departement department : departments) {
             total += department.getMaxSaturation();
         }
-  //      System.out.println("Total Max Saturation: " + total);
         return ResponseEntity.ok((double) total);
     }
 
@@ -86,7 +82,6 @@ public class ServiceDepartement implements IServiceDepartement {
             errorResponse.put("error", "you pass the limit.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
-//        else {
             for (Employee employee : ListEmpls) {
                 employee.setDepartement(existingDepartement);
                 employeeRepo.save(employee);
@@ -96,7 +91,6 @@ public class ServiceDepartement implements IServiceDepartement {
             existingDepartement.setNbreEmpl(anis.size());
             departementRepo.save(existingDepartement);
         return ResponseEntity.ok("Department added with success.");
-//        }
     }
     @Override
     public Departement retrieveDepartment(Long idDepartment) {
@@ -116,7 +110,6 @@ public class ServiceDepartement implements IServiceDepartement {
     }
     public List<Departement> searchUsersByEmailStartingWithLetter(String startingLetter) {
         return departementRepo.findByLibelleStartingWith(startingLetter);
-//        return departementRepo.findByLibelleStartingWithAndNbreEmplAndMaxSaturation(startingLetter,nbreEmployees,maxSaturation);
 
     }
 }

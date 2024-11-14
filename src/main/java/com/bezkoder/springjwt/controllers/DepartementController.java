@@ -38,7 +38,7 @@ public class DepartementController {
         return iServiceDepartement.addDepartment(p);
     }
     @PutMapping("/updateDepartment/{id}")
-    public Departement updateDepartement(@PathVariable("id") Long id,@RequestBody Departement p) throws Exception {
+    public Departement updateDepartement(@PathVariable("id") Long id,@RequestBody Departement p) {
         return iServiceDepartement.updateDepartment(id,p);
     }
     @PutMapping("/affecterEmplADep/{idD}")

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -227,7 +226,7 @@ public class ServiceConge implements IServiceConge {
         List<Employee> employees = employeeRepo.findAll();
         Employee employee = new Employee();
         for (Employee u : employees){
-            if(u.getUserId() ==id){
+            if(u.getUserId().equals(id)){
                 employee=u;
             }
         }

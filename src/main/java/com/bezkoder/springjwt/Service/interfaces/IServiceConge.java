@@ -16,7 +16,6 @@ public interface IServiceConge {
     public void deleteConge(Long id);
     public Conge getConge(Long id);
     List<Conge> retrieveAll();
-//    public List<Conge> searchCongesByStartingLetters(String StartingLetter);
     public Set<Conge> getCongesByEmp(Long id);
     public Map<CongeType, Integer> calculerNombreCongesParType();
     public List<Conge> searchCongesByStartingLetters(String startingLette);

@@ -110,7 +110,7 @@ public class ServiceNote implements ISerivceNote {
         List<User> users = userRepository.findAll();
         User user = new User();
         for (User u :users){
-             if(u.getId() ==employee.getUserId()){
+             if(u.getId().equals(employee.getUserId()) ){
                  user=u;
              }
         }

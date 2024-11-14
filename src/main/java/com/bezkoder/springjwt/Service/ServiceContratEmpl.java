@@ -42,11 +42,14 @@ public class ServiceContratEmpl implements IServiceContratEmpl {
     EmployeeRepo employeeRepo;
     UserRepository userRepository;
 
+    final static String error = "error";
+
+
     @Override
     public ResponseEntity<?> addContratEmployee(ContratEmployee contrat, Long id) {
         Employee emp = employeeRepo.findById(id).get();
         Set<ContratEmployee> anis = emp.getContratEmployees();
-        if (anis.size() > 0) {
+        if (anis.isEmpty()) {
             if (ContratEmployeeIsValid(contrat, emp)) {
                 for (ContratEmployee se : anis) {
                     se.setIsArchive(true);
@@ -63,7 +66,7 @@ public class ServiceContratEmpl implements IServiceContratEmpl {
         }
         if (contrat.getDate_debut().isAfter(contrat.getDate_fin())) {
             Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Invalid Contrat request. Please check your inputs.");
+            errorResponse.put(error, "Invalid Contrat request. Please check your inputs.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
         contrat.setEmpl(emp);
@@ -109,12 +112,12 @@ public class ServiceContratEmpl implements IServiceContratEmpl {
                 return ResponseEntity.ok(updatedContratEmployee.getId_contrat_e());
             } else {
                 Map<String, String> errorResponse = new HashMap<>();
-                errorResponse.put("error", "Invalid Contrat request. Please check your inputs.");
+                errorResponse.put(error, "Invalid Contrat request. Please check your inputs.");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
             }
         } else {
             Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Contrat not found with ID: " + id);
+            errorResponse.put(error, "Contrat not found with ID: " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
@@ -157,7 +160,7 @@ public class ServiceContratEmpl implements IServiceContratEmpl {
 public void export(HttpServletResponse response, ContratEmployee contrat,Long id) throws IOException, WriterException, DocumentException {
     Document document = new Document(PageSize.A4);
     ByteArrayOutputStream qrCodeStream = new ByteArrayOutputStream();
-
+    final String td = "TD\n";
     PdfWriter.getInstance(document, response.getOutputStream());
     document.open();
     Employee employee = employeeRepo.findById(id).get();
@@ -188,9 +191,9 @@ public void export(HttpServletResponse response, ContratEmployee contrat,Long id
     paragraphData.add("End Date: " + contrat.getDate_fin() + "\n");
     paragraphData.add("Contract Type: " + contrat.getTypeCE() + "\n");
     paragraphData.add("Weekly Duration: " + contrat.getDuree_hebdomadaire() + " hours\n");
-    paragraphData.add("Base Salary: " + contrat.getSalaire_base() + " TD\n");
-    paragraphData.add("Price of Hour: " + contrat.getMontant_heures_supplementaires() + " TD\n");
-    paragraphData.add("Percentage: " + contrat.getPourcentage() + " TD\n");
+    paragraphData.add("Base Salary: " + contrat.getSalaire_base() + td);
+    paragraphData.add("Price of Hour: " + contrat.getMontant_heures_supplementaires() + td);
+    paragraphData.add("Percentage: " + contrat.getPourcentage() + td);
     paragraphData.add("Is Archived: " + contrat.getIsArchive() + "\n");
     document.add(paragraphData);
     document.close();

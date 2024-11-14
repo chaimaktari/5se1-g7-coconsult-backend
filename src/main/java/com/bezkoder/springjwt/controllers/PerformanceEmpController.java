@@ -24,10 +24,7 @@ public class PerformanceEmpController {
     public void savePerformance(@RequestBody PerformanceEmployee p,@PathVariable("id") Long id){
         iSerivcePerformance.savePerformance(p,id);
     }
-//    @PutMapping("/updatePerformance")
-//    public PerformanceEmployee updatePerformance(@RequestBody PerformanceEmployee p) throws Exception {
-//        return iSerivcePerformance.savePerformance(p);
-//    }
+
     @DeleteMapping("/deletePerformance/{p}")
     public void deletePerformance(@PathVariable("p") Long p) {
         iSerivcePerformance.deletePerformance(p);

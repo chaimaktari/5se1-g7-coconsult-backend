@@ -5,7 +5,6 @@ import com.bezkoder.springjwt.Service.Iservice;
 import com.bezkoder.springjwt.models.*;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,15 +23,13 @@ public class Controller {
     @PostMapping("/addProject")
     @ResponseBody
     public Project addProject(@RequestBody Project p) {
-        Project project = iservice.addProject(p);
-        return project;
+        return iservice.addProject(p);
     }
 
     @PutMapping("/updateproject/{idProject}")
     @ResponseBody
     public Project updateProject(@PathVariable("idProject") Long idProject, @RequestBody Project p) {
-        Project project = iservice.updateProject(idProject, p);
-        return project;
+        return iservice.updateProject(idProject, p);
     }
 
     @DeleteMapping("/removeProject/{idProject}")
@@ -69,11 +66,7 @@ public class Controller {
         return addedTask;
     }
 
-    /* @PostMapping("/assignProject/{projectId}")
-     public Consultant addConsultantAndAssignToProject(@PathVariable Long projectId, @RequestBody Consultant consultant) {
-         Consultant addedConsultant = iservice.addConsultantAndAssignToProject(projectId, consultant);
-         return addedConsultant ;
-     }*/
+
     @PutMapping("/updatetask/{idTask}")
     @ResponseBody
     public Task updateTask(@PathVariable("idTask") Long idTask, @RequestBody Task t) {
@@ -137,59 +130,6 @@ public class Controller {
     }
 
 
-    /*
-        @PostMapping("/addConsultantassign")
-        public ResponseEntity<Consultant> addAndAssignConsultantToProjects(
-                @RequestBody Consultant consultant,
-                @RequestParam("projectIds") List<Long> projectIds) {
-            Consultant savedConsultant = iservice.addAndAssignConsultantToProjects(consultant, projectIds);
-            return new ResponseEntity<>(savedConsultant, HttpStatus.CREATED);
-        }
-
-        @PutMapping("/{projectId}/assign-consultants")
-        public ResponseEntity<String> assignConsultantsToProject(@PathVariable Long projectId, @RequestBody List<Long> consultantIds) {
-            try {
-                iservice.assignConsultantsToProject(projectId, consultantIds);
-                return ResponseEntity.ok("Consultants assigned successfully to the project with ID: " + projectId);
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-            }
-        }
-        @PostMapping("/addConsultant")
-        @ResponseBody
-        public Consultant addConsultant(@RequestBody Consultant C) {
-            Consultant CONSt = iservice.addConsultant(C);
-            return CONSt;
-        }
-        @DeleteMapping("/deletecons/{idcons}")
-        @ResponseBody
-        public void deleteConsultant(@PathVariable("idcons") Long id) {
-            iservice.deleteConsultant(id);
-        }
-
-        @PutMapping("/updateConsultant/{idCons}")
-        @ResponseBody
-        public void updateConsultant(@PathVariable("idCons") Long id, @RequestBody Consultant c) {
-            Consultant consultant = iservice.updateConsultant(id, c);
-        }
-
-        @GetMapping("/getAllcons")
-        @ResponseBody
-        public List<Consultant> getAllConsultants() {
-            List<Consultant> consultantList = iservice.getAllConsultants();
-            return consultantList;
-        }
-        @GetMapping("/getconsultantByproject/{projectId}")
-        @ResponseBody
-        List<Consultant> getConsultantsByProject(@PathVariable Long projectId) {
-            List<Consultant> listcons = iservice.getConsultantsByProject(projectId);
-            return listcons;
-        }
-        @GetMapping("/getconsultant/{id}")
-        public ResponseEntity<Consultant> getConsultantById(@PathVariable Long id) {
-            return iservice.getConsultantById(id);
-        }
-    */
     @GetMapping("/profitability-by-year")
     public List<Object[]> getProfitabilityByYear() {
         return iservice.calculateProfitabilityByYear();
@@ -208,11 +148,6 @@ public class Controller {
         iservice.assignEmployeesToTeam(employees,teamId);
     }
 
-   /* @PostMapping("/addteamaff/{projectId}")
-    public Team addTeamAndAssignToProject(@PathVariable Long projectId, @RequestBody Team team) {
-        Team addedTeam = iservice.addTeamAndAssignToProject(team,projectId);
-        return addedTeam;
-    }*/
 
 
     @GetMapping("/progression/{projectId}")

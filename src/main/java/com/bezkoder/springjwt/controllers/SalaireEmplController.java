@@ -18,7 +18,7 @@ public class SalaireEmplController {
      return   iServiceSalaire.addSalaire(p,id);
     }
     @PutMapping("/updateSalaire/{id}")
-    public SalaireEmployee updateSalaire(@RequestBody SalaireEmployee p, @PathVariable ("id") Long id) throws Exception {
+    public SalaireEmployee updateSalaire(@RequestBody SalaireEmployee p, @PathVariable ("id") Long id) {
         return iServiceSalaire.updateSalaire(p,id);
     }
     @DeleteMapping("/deleteSalaire/{p}")
@@ -34,10 +34,6 @@ public class SalaireEmplController {
         return iServiceSalaire.retrieveAll();
     }
 
-//    @GetMapping("/findBySalaireBaseGreaterThan/{minSalaire}")
-//    public List<SalaireEmployee> retrieveAll(@PathVariable("minSalaire") Float minSalaire){
-//        return iServiceSalaire.findBySalaireBaseGreaterThan(minSalaire);
-//    }
     @GetMapping("/calculateAverageSalaryByPoste/{posteEmployee}")
     public Float calculateAverageSalaryByPoste(@PathVariable("posteEmployee") PosteEmployee posteEmployee){
         return iServiceSalaire.calculateAverageSalaryByPoste(posteEmployee);

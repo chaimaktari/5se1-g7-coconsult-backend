@@ -13,7 +13,6 @@ public interface IServiceSalaire {
     public void deleteSalaire(Long id);
     public SalaireEmployee getSalaire(Long id);
     List<SalaireEmployee> retrieveAll();
-//    public List<SalaireEmployee> findBySalaireBaseGreaterThan(Float minSalaire);
 
     public Float calculateAverageSalaryByPoste(PosteEmployee posteEmployee);
 

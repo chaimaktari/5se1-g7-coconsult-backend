@@ -17,7 +17,6 @@ public interface IServiceContratEmpl {
     public ContratEmployee getContratEmployee(Long id);
     List<ContratEmployee> retrieveAll();
     public Integer countByIsArchiveIsFalseAndDate_debutBetween(Date startDate, Date endDate);
-//    public void generateContractPDF(ContratEmployee contrat) throws IOException;
     public void export(HttpServletResponse response, ContratEmployee contrat,Long id) throws IOException, WriterException, DocumentException;
 
 }

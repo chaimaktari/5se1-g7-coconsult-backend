@@ -143,8 +143,7 @@ public class ServiceEmployee implements IServiceEmployee {
     }
     public Employee assignEmToEquipe(Long idE,Long idEquipe){
         Employee e = employeeRepo.findById(idE).orElse(null);
-//        Team eq  = teemRepo.findById(idEquipe).orElse(null);
-//            e.setTeam(eq);
+
         return  employeeRepo.save(e);
     }
 
@@ -168,7 +167,6 @@ public class ServiceEmployee implements IServiceEmployee {
     public ResponseEntity<?> calculateAvailablePercentage() {
         List<Employee> employees = employeeRepo.findAll();
         double anis=0;
-    //    double total = employees.size();
         for(Employee employee : employees){
             if(employee.getPerformanceEmployee()!=null){
                 if(employee.getPerformanceEmployee().getMoyenne()>3){

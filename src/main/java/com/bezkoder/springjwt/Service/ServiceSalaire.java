@@ -138,9 +138,6 @@ public class ServiceSalaire implements IServiceSalaire {
         return salaireEmployeeService.findAll();
     }
 
-//    public List<SalaireEmployee> findBySalaireBaseGreaterThan(Float minSalaire) {
-//        return salaireEmployeeService.findByIsArchiveAndSalaireBaseGreaterThan(false,minSalaire);
-//    }
 
     //juste st7a9itha fel fct calculateAverageSalaryByPoste
     public List<Employee> findAllByPosteEmployee(PosteEmployee posteEmployee) {
@@ -168,6 +165,7 @@ public class ServiceSalaire implements IServiceSalaire {
     }
 
     public ResponseEntity<?> generateMonthlySalaryReport(int year, int month) {
+        final String TOTAL_SALARY_KEY = "TotalSalary";
         YearMonth selectedMonth = YearMonth.of(year, month);
         LocalDate startDate = selectedMonth.atDay(1);
         LocalDate endDate = selectedMonth.atEndOfMonth();
@@ -187,17 +185,17 @@ public class ServiceSalaire implements IServiceSalaire {
             if (!report.containsKey(employeeName)) {
                 Map<String, Object> employeeDetails = new HashMap<>();
                 employeeDetails.put("Position", employee.getPosteEmployee());
-                employeeDetails.put("TotalSalary", 0.0);
+                employeeDetails.put(TOTAL_SALARY_KEY, 0.0);
                 employeeDetails.put("Salary Details", new HashMap<>());
                 report.put(employeeName, employeeDetails);
             }
             Map<String, Object> employeeDetails = report.get(employeeName);
             double totalSalary = (double) employeeDetails.get("TotalSalary");
             totalSalary += salary.getTotal_salaire();
-            employeeDetails.put("TotalSalary", totalSalary);
+            employeeDetails.put(TOTAL_SALARY_KEY, totalSalary);
 
             Map<String, Double> components = (Map<String, Double>) employeeDetails.get("Salary Details");
-            components.put("TotalSalaire", components.getOrDefault("BaseSalary", 0.0) + salary.getTotal_salaire());
+            components.put(TOTAL_SALARY_KEY, components.getOrDefault("BaseSalary", 0.0) + salary.getTotal_salaire());
             components.put("Bonuses", components.getOrDefault("Bonuses", 0.0) + salary.getPrime());
             components.put("Supplement Hour", components.getOrDefault("Supplement Hour", 0.0) + salary.getHeures_supplementaires());
         }

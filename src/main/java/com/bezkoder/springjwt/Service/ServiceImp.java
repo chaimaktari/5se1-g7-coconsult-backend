@@ -144,21 +144,6 @@ public class ServiceImp implements Iservice {
 
 
 
-   /* public Consultant addConsultantAndAssignToProject(Long projectId, Consultant consultant) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new NoSuchElementException("Aucun projet trouvé avec l'ID : " + projectId));
-        List<Project> projects = new ArrayList<>();
-        if (consultant.getProjects() != null) {
-            consultant.getProjects().add(project);
-        } else {
-            projects.add(project);
-            consultant.setProjects(projects);
-        }
-        // Affecter le consultant au projet
-        project.setConsultant(consultant);
-        return consultantRepository.save(consultant);
-    }*/
-
 
     public void AssignTaskToEmployee(Long id_employe, Long taskId) {
 
@@ -306,23 +291,6 @@ public class ServiceImp implements Iservice {
         }
     }
 
-   /* public double calculateProjectProgression(Long projectId) {
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new NoSuchElementException("Projet non trouvé"));
-
-        List<Task> tasks = project.getTasks();
-        int totalTasks = tasks.size();
-        if (totalTasks == 0) {
-            return 0.0;
-        }
-
-        int totalProgress = 0;
-        for (Task task : tasks) {
-            totalProgress += task.getProgression();
-        }
-        return ((double) totalProgress / totalTasks);
-    }*/
-
 
     public double calculateProjectProgression(Long projectId) {
         Project project = projectRepository.findById(projectId)
@@ -410,30 +378,6 @@ public class ServiceImp implements Iservice {
         teamRepository.save(team);
     }
 
-    /* public Team addTeamAndAssignToProject(Team team, Long projectId) {
-         // Récupérer le projet correspondant à l'ID fourni
-         Project project = projectRepository.findById(projectId)
-                 .orElseThrow(() -> new NoSuchElementException("Aucun projet trouvé avec l'ID : " + projectId));
-
-         // Vérifier s'il existe déjà une équipe associée à ce projet
-         Team existingTeam = project.getTeam();
-         if (existingTeam != null) {
-             throw new IllegalStateException("Ce projet a déjà une équipe associée.");
-         }
-
-         // Associer l'équipe au projet
-         team.setProject(project);
-
-         // Enregistrer l'équipe
-         Team savedTeam = teamRepository.save(team);
-
-         // Mettre à jour la référence de l'équipe dans le projet
-         project.setTeam(savedTeam);
-         projectRepository.save(project);
-
-         return savedTeam;
-     }
- */
     public List<Team> getAllTeams() {
         return teamRepository.findAll();
     }
@@ -697,61 +641,6 @@ public class ServiceImp implements Iservice {
 
 
 
-    /*public void AssignTaskToEmployee(Long id_employe, Long taskId) {
-        // Recherche de la tâche par son ID
-        Task task = null;
-        for (Project project : getAllProjects()) {
-            for (Task t : project.getTasks()) {
-                if (t.getTaskid().equals(taskId)) {
-                    task = t;
-                    break;
-                }
-            }
-            if (task != null) {
-                break;
-            }
-        }
-
-        // Vérifier si la tâche a été trouvée
-        if (task != null) {
-            Project project = task.getProject();
-            // Vérifier si le projet de la tâche est nul
-            if (project != null) {
-                Team team = project.getTeam();
-                // Vérifier si l'équipe du projet est nulle
-                if (team != null) {
-                    List<Employee> employees = team.getEmployees();
-                    // Vérifier si la liste des employés de l'équipe est nulle ou vide
-                    if (employees != null && !employees.isEmpty()) {
-                        // Recherche de l'employé correspondant à l'ID fourni
-                        Employee employee = null;
-                        for (Employee emp : employees) {
-                            if (emp.getId_employe().equals(id_employe)) {
-                                employee = emp;
-                                break;
-                            }
-                        }
-
-                        // Si l'employé existe, attribuer la tâche à l'employé
-                        if (employee != null) {
-                            task.setOwner(employee.getUsername());
-                            taskRepository.save(task);
-                            log.info("La tâche a été attribuée à l'employé avec succès.");
-                        } else {
-                            throw new NoSuchElementException("Aucun employé trouvé avec l'ID : " + id_employe);
-                        }
-                    } else {
-                        throw new IllegalStateException("La liste des employés de l'équipe est nulle ou vide.");
-                    }
-                } else {
-                    throw new IllegalStateException("L'équipe du projet est nulle.");
-                }
-            } else {
-                throw new IllegalStateException("Le projet de la tâche est nul.");
-            }
-        } else {
-            throw new NoSuchElementException("Aucune tâche trouvée avec l'ID : " + taskId);
-        }*/
 
 
 

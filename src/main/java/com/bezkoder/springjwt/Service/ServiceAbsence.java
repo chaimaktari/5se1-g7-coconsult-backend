@@ -31,7 +31,6 @@ public class ServiceAbsence implements IServiceAbsence {
     }
 
     public List<Absence> searchAbsenceByStartingLetters(String StartingLetter) {
-//        return congeRepo.findByCommentaireStartingWithOrJustificationStartingWith(StartingLetter, StartingLetter);
 
         return absenceRepo.findByMotifStartingWith(StartingLetter);
 
@@ -71,11 +70,10 @@ public class ServiceAbsence implements IServiceAbsence {
 
     @Override
     public Set<Absence> getAbsencesByUserId(Long id) {
-        User user = userRepository.findById(id).get();
         List<Employee> employees = employeeRepo.findAll();
         Employee employee = new Employee();
         for (Employee u : employees){
-            if(u.getUserId() ==id){
+            if(u.getUserId().equals(id)){
                 employee=u;
             }
         }
