@@ -35,6 +35,8 @@ class StockServiceTest {
     @Autowired
     private StockService stockService;
 
+
+
     @Test
     void testDetermineQuantityToAddForFurnitureCategory() {
         Resources resource = Resources.builder()
@@ -48,11 +50,12 @@ class StockServiceTest {
 
         int quantityToAdd = stockService.determineQuantityToAdd(stock);
 
-        assertEquals(30, quantityToAdd); // Ensure correct value returned for furniture category
+        assertEquals(30, quantityToAdd);
     }
 
     @Test
     void testCheckStockAndGenerateCommands() {
+
         Stock stock = Stock.builder()
                 .stockID(1L)
                 .location("Tunis")
@@ -68,13 +71,10 @@ class StockServiceTest {
         int quantity = 20;
         Long fournisseurId = 1L;
 
-        // Mock service method to generate commande
-        when(commandeRepository.save(Mockito.any(Commande.class))).thenReturn(new Commande());
-
         Commande commande = stockService.createCommandeFromStock(stock, quantity, fournisseurId);
 
-        assertNotNull(commande); // Ensure the commande object is created
-        assertEquals(quantity, commande.getQuantity()); // Ensure quantity is as expected
+        assertNotNull(commande);
+        assertEquals(quantity, commande.getQuantity());
         assertEquals("Tunis", commande.getLocation());
         assertEquals(true, commande.getReplenishmentAlert());
         assertEquals(stock.getEntryDate(), commande.getEntryDate());
@@ -87,19 +87,18 @@ class StockServiceTest {
         assertEquals(StatusCommande.PENDING, commande.getStatusCommande());
     }
 
+
     @Test
     void testCheckStockAndSetReplenishmentAlert() {
 
         Fournisseur fournisseur = Fournisseur.builder()
                 .fournisseurID(1L)
                 .build();
-        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS))
-                .thenReturn(List.of(fournisseur)); // Mock the return of a valid list of fournisseurs
-        
+        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
         Long selectedFournisseurId = stockService.selectSupplierForCategory(ResourcesCategorie.ELECTRONICS);
 
-        assertNotNull(selectedFournisseurId); // Ensure the selected supplier ID is not null
-        assertEquals(1L, selectedFournisseurId); // Ensure it returns the correct supplier ID
+        assertNotNull(selectedFournisseurId);
+        assertEquals(1L, selectedFournisseurId);
     }
 
     @Test
@@ -115,15 +114,14 @@ class StockServiceTest {
                 .fournisseurID(1L)
                 .build();
 
-        // Mock repositories to return non-null lists
-        when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock)); // Mock low stock retrieval
-        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS))
-                .thenReturn(List.of(fournisseur)); // Mock fournisseur list
+        when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock));
+        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
 
         stockService.generateCommandsForLowStocksWithReplenishmentAlert();
 
-        // Verify methods are called with expected arguments
         verify(stockRepository).save(Mockito.any(Stock.class));
         verify(commandeRepository).save(Mockito.any(Commande.class));
     }
+
+
 }
