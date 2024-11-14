@@ -53,39 +53,39 @@ class StockServiceTest {
         assertEquals(30, quantityToAdd);
     }
 
-    // @Test
-    // void testCheckStockAndGenerateCommands() {
+    @Test
+    void testCheckStockAndGenerateCommands() {
 
-    //     Stock stock = Stock.builder()
-    //             .stockID(1L)
-    //             .location("Tunis")
-    //             .replenishmentAlert(true)
-    //             .entryDate(new Date())
-    //             .purchaseDate(new Date())
-    //             .expirationDate(new Date())
-    //             .quality("good")
-    //             .pourcentageDefauts(2)
-    //             .categorieStock(ResourcesCategorie.ELECTRONICS)
-    //             .build();
+        Stock stock = Stock.builder()
+                .stockID(1L)
+                .location("Tunis")
+                .replenishmentAlert(true)
+                .entryDate(new Date())
+                .purchaseDate(new Date())
+                .expirationDate(new Date())
+                .quality("good")
+                .pourcentageDefauts(2)
+                .categorieStock(ResourcesCategorie.ELECTRONICS)
+                .build();
 
-    //     int quantity = 20;
-    //     Long fournisseurId = 1L;
+        int quantity = 20;
+        Long fournisseurId = 1L;
 
-    //     Commande commande = stockService.createCommandeFromStock(stock, quantity, fournisseurId);
+        Commande commande = stockService.createCommandeFromStock(stock, quantity, fournisseurId);
 
-    //     assertNotNull(commande);
-    //     assertEquals(quantity, commande.getQuantity());
-    //     assertEquals("Tunis", commande.getLocation());
-    //     assertEquals(true, commande.getReplenishmentAlert());
-    //     assertEquals(stock.getEntryDate(), commande.getEntryDate());
-    //     assertEquals(stock.getPurchaseDate(), commande.getPurchaseDate());
-    //     assertEquals(stock.getExpirationDate(), commande.getExpirationDate());
-    //     assertEquals(stock.getQuality(), commande.getQuality());
-    //     assertEquals(stock.getPourcentageDefauts(), commande.getPourcentageDefauts());
-    //     assertEquals(stock.getCategorieStock(), commande.getCategorieStock());
-    //     assertEquals(fournisseurId, commande.getFournissID());
-    //     assertEquals(StatusCommande.PENDING, commande.getStatusCommande());
-    // }
+        assertNotNull(commande);
+        assertEquals(quantity, commande.getQuantity());
+        assertEquals("Tunis", commande.getLocation());
+        assertEquals(true, commande.getReplenishmentAlert());
+        assertEquals(stock.getEntryDate(), commande.getEntryDate());
+        assertEquals(stock.getPurchaseDate(), commande.getPurchaseDate());
+        assertEquals(stock.getExpirationDate(), commande.getExpirationDate());
+        assertEquals(stock.getQuality(), commande.getQuality());
+        assertEquals(stock.getPourcentageDefauts(), commande.getPourcentageDefauts());
+        assertEquals(stock.getCategorieStock(), commande.getCategorieStock());
+        assertEquals(fournisseurId, commande.getFournissID());
+        assertEquals(StatusCommande.PENDING, commande.getStatusCommande());
+    }
 
 
     // @Test
