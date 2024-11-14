@@ -14,7 +14,7 @@ services:
   mysqldb:
     image: mysql:8
     container_name: db_mysql
-    hostname: db_mysql
+    hostname: localhost
     ports:
       - 3306:3306
 
