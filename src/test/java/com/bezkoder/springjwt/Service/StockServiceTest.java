@@ -101,27 +101,27 @@ class StockServiceTest {
         assertEquals(1L, selectedFournisseurId);
     }
 
-    // @Test
-    // void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
+    @Test
+    void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
 
-    //     Stock lowStock = Stock.builder()
-    //             .stockID(1L)
-    //             .categorieStock(ResourcesCategorie.ELECTRONICS)
-    //             .replenishmentAlert(true)
-    //             .build();
+        Stock lowStock = Stock.builder()
+                .stockID(1L)
+                .categorieStock(ResourcesCategorie.ELECTRONICS)
+                .replenishmentAlert(true)
+                .build();
 
-    //     Fournisseur fournisseur = Fournisseur.builder()
-    //             .fournisseurID(1L)
-    //             .build();
+        Fournisseur fournisseur = Fournisseur.builder()
+                .fournisseurID(1L)
+                .build();
 
-    //     when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock));
-    //     when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
+        when(stockRepository.findStockByReplenishmentAlert()).thenReturn(List.of(lowStock));
+        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
 
-    //     stockService.generateCommandsForLowStocksWithReplenishmentAlert();
+        stockService.generateCommandsForLowStocksWithReplenishmentAlert();
 
-    //     verify(stockRepository).save(Mockito.any(Stock.class));
-    //     verify(commandeRepository).save(Mockito.any(Commande.class));
-    // }
+        verify(stockRepository).save(Mockito.any(Stock.class));
+        verify(commandeRepository).save(Mockito.any(Commande.class));
+    }
 
 
 }
