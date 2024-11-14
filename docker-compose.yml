@@ -28,18 +28,13 @@ services:
       
       frontend:
     build:
-      context: ./frontend  # Répertoire où se trouve votre Dockerfile pour le frontend Angular
-    container_name: frontend-container
-    image: imenhadjyahya/imenhadjyahya-g7-coconsult:latest  # Vous pouvez définir le nom de l'image Docker pour votre frontend
+      context: ./frontend  # Répertoire où se trouve le Dockerfile pour le frontend
     ports:
-      - "4200:4200"  # Mapping du port 4200 du conteneur vers le port 4200 de votre machine hôte
-    volumes:
-      - ./frontend:/usr/share/nginx/html  # Monte le répertoire contenant le code de l'application Angular
+      - "4200:4200"
     networks:
       - backend-network
     depends_on:
-      - backend  # Attendre que le backend soit disponible avant de démarrer le frontend
-
+      - backend
 
 networks:
   backend-network:
