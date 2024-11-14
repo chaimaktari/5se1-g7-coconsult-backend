@@ -117,7 +117,7 @@ public class StockService implements IStockService {
     }
 
 
-    private int determineQuantityToAdd(Stock stock) {
+    public int determineQuantityToAdd(Stock stock) {
 
 
         ResourcesCategorie categorie = stock.getCategorieStock();
@@ -163,7 +163,7 @@ public class StockService implements IStockService {
         return quantityToAdd;
     }
 
-    private Long selectSupplierForCategory(ResourcesCategorie categorie) {
+    public Long selectSupplierForCategory(ResourcesCategorie categorie) {
 
         List<Fournisseur> fournisseurs = fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(categorie);
         if (!fournisseurs.isEmpty()) {
@@ -174,7 +174,7 @@ public class StockService implements IStockService {
         }
     }
 
-    private Commande createCommandeFromStock(Stock stock, int quantity, Long fournisseurId) {
+    public Commande createCommandeFromStock(Stock stock, int quantity, Long fournisseurId) {
         log.info("Creating command from stock - Stock ID: {}, Quantity to add: {}, Fournisseur ID: {}", stock.getStockID(), quantity, fournisseurId);
         Commande commande = Commande.builder()
                 .quantity(quantity)

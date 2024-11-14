@@ -115,17 +115,16 @@ public class FournisseurService implements IFournisseurService {
 
     @Override
     public int getNombreStocksFournisseur(Long fournisseurID) {
-        // Récupérer le fournisseur par son ID
+
         Fournisseur fournisseur = fournisseurRepository.findById(fournisseurID).orElse(null);
 
-        // Vérifier si le fournisseur existe
+
         if (fournisseur != null) {
-            // Récupérer la liste des stocks associés au fournisseur
+
             List<Stock> stocks = fournisseur.getStocks();
-            // Retourner le nombre de stocks associés
             return stocks.size();
         } else {
-            // Si le fournisseur n'existe pas, retourner -1 pour indiquer une erreur
+
             return -1;
         }
     }

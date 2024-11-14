@@ -1,0 +1,23 @@
+services:
+  springboot:
+    image: akacha08/5se1g7coconsult:v0
+    container_name: springboot
+    hostname: springboot
+    restart: unless-stopped
+    ports:
+      - "8087:8087"
+
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql:8
+    container_name: db_mysql
+    hostname: db_mysql
+    ports:
+      - 3306:3306
+
+    environment:
+      - MYSQL_DATABASE=Coconsult
+      - DATABASE_DRIVER=com.mysql.cj.jdbc.Driver
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
