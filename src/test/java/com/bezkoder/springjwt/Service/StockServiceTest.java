@@ -88,18 +88,18 @@ class StockServiceTest {
     }
 
 
-    // @Test
-    // void testCheckStockAndSetReplenishmentAlert() {
+    @Test
+    void testCheckStockAndSetReplenishmentAlert() {
 
-    //     Fournisseur fournisseur = Fournisseur.builder()
-    //             .fournisseurID(1L)
-    //             .build();
-    //     when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
-    //     Long selectedFournisseurId = stockService.selectSupplierForCategory(ResourcesCategorie.ELECTRONICS);
+        Fournisseur fournisseur = Fournisseur.builder()
+                .fournisseurID(1L)
+                .build();
+        when(fournisseurRepository.findFournisseurByTypeFournisseurOrderByScoreDesc(ResourcesCategorie.ELECTRONICS)).thenReturn(List.of(fournisseur));
+        Long selectedFournisseurId = stockService.selectSupplierForCategory(ResourcesCategorie.ELECTRONICS);
 
-    //     assertNotNull(selectedFournisseurId);
-    //     assertEquals(1L, selectedFournisseurId);
-    // }
+        assertNotNull(selectedFournisseurId);
+        assertEquals(1L, selectedFournisseurId);
+    }
 
     // @Test
     // void testGenerateCommandsForLowStocksWithReplenishmentAlert() {
