@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - "8087:8087"
+    network_mode: "host"
 
     depends_on:
       - mysqldb
