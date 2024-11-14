@@ -155,4 +155,15 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     return source;
   }
 
+
+   @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(csrf -> csrf.disable())
+            .authorizeRequests(auth ->
+                    auth.anyRequest().permitAll() 
+            );
+
+    return http.build();
+  }
+
 }
