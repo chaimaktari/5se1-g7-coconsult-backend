@@ -27,14 +27,17 @@ services:
 
       
       frontend:
-    build:
-      context: ./frontend  # Répertoire où se trouve le Dockerfile pour le frontend
+    image: imenhadjyahya-g7-coconsult-front:latest
+    container_name: frontend-container
+    environment:
+      API_URL: http://backend-container:8090  
     ports:
-      - "4200:4200"
-    networks:
-      - backend-network
+      - "3500:80"  
     depends_on:
       - backend
+    networks:
+      - my-network
+
 
 networks:
   backend-network:
