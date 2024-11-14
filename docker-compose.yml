@@ -37,13 +37,14 @@ services:
         condition: service_healthy
     networks:
       - my-network
-frontend:
+
+  frontend:
     image: ktarichaima-g7-coconsult-front:latest
     container_name: frontend-container
     environment:
-      - API_URL=http://backend-container:8090  
+      API_URL: http://backend-container:8090  
     ports:
-      - "3500:8090"  
+      - "3500:3500"  
     depends_on:
       - backend
     networks:
