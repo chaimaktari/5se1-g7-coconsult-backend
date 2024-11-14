@@ -61,4 +61,21 @@ class ServiceDepartementTest {
         assertEquals(21, response.getBody());
     }
 
+
+    @Test
+    public void testSearchUsersByEmailStartingWithLetter() {
+        String startingLetter = "a";
+        Departement dep_1 = Departement.builder().id_departement(1L).libelle("anis1").maxSaturation(10).nbreEmpl(8).build();
+        Departement dep_2 = Departement.builder().id_departement(2L).libelle("anis2").maxSaturation(15).nbreEmpl(8).build();
+        List<Departement> expectedDepartments = Arrays.asList(dep_1, dep_2);
+
+        Mockito.when(departementRepo.findByLibelleStartingWith(startingLetter)).thenReturn(expectedDepartments);
+
+        List<Departement> result = departmentService.searchUsersByEmailStartingWithLetter(startingLetter);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(expectedDepartments, result);
+    }
+
 }
