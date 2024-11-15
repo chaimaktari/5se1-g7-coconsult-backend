@@ -46,6 +46,9 @@ services:
     restart: always
     networks:
       - network
+    depends_on:
+      - anisfetoui-5se1-devdynamos
+
   mysql-exporter:
     image: prom/mysqld-exporter
     container_name: mysql-exporter
