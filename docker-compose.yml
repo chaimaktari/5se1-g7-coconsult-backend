@@ -12,6 +12,16 @@ services:
     depends_on:
       - db
 
+  frontend:
+    image: zahraeloulabouafoura-g7-coconsult-front:latest
+    container_name: frontend-container
+    ports:
+      - "4200:80"  
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+
   db:
     image: mysql:5.7
     environment:
@@ -30,3 +40,4 @@ networks:
 
 volumes:
   db-data:  # Déclaration du volume persistant pour la base de données
+
