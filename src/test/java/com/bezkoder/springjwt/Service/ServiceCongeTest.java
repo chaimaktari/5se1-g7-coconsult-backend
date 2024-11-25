@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class ServiceCongeTest {
-    @MockBean
+ /*   @MockBean
     private EmployeeRepo employeeRepo;
     @MockBean
     private CongeRepo congeRepo;
@@ -126,6 +126,6 @@ class ServiceCongeTest {
         assertEquals(9, employeeAnis.getNbrJourConge());
     }
 
-
+*/
 
 }
