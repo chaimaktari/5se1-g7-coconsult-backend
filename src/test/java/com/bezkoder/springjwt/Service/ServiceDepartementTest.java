@@ -62,7 +62,7 @@ class ServiceDepartementTest {
     }
 
 
- /*   @Test
+    @Test
     void testSearchUsersByEmailStartingWithLetter() {
         String startingLetter = "a";
         Departement dep_1 = Departement.builder().id_departement(1L).libelle("anis1").maxSaturation(10).nbreEmpl(8).build();
@@ -78,6 +78,6 @@ class ServiceDepartementTest {
         assertEquals(expectedDepartments, result);
     }
 
-  */
+
 
 }
