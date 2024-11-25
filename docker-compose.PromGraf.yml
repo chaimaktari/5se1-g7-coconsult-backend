@@ -21,6 +21,7 @@ services:
 
 networks:
   monitoring:
-    driver: bridge
+    external: true
+    name: 2fd26d230898f6ed4ccdcfb944eed56e6e05fa8dfdc66a82c1a3a53d7eb4e91f
 volumes:
   grafana-storage:

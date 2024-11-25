@@ -31,7 +31,9 @@ services:
     container_name: cadvisor
     ports:
       - '7000:8080'
-    restart: unless-stopped
+    restart: no
+    networks:
+      - monitoring
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:ro
@@ -67,3 +69,6 @@ volumes:
 networks:
   network:
     driver: bridge
+  monitoring:
+    external: true
+    name: f79716bbd08d83b4b227acbf5333696f2e56cd62fb4afa26775ae085c98b619d
